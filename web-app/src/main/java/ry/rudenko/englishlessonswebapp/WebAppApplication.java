@@ -1,4 +1,4 @@
-package ry.rudenko.webapp;
+package ry.rudenko.englishlessonswebapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
