@@ -9,5 +9,14 @@ services:
      POSTGRES_PASSWORD: root
      POSTGRES_USER: rttr
      POSTGRES_DB: db_HW_1
+  db-rudenko-final:
+      image: postgres:12
+      restart: always
+      ports:
+        - 5400:5432
+      environment:
+        POSTGRES_PASSWORD: root
+        POSTGRES_USER: rttr
+        POSTGRES_DB: db_final
 
 

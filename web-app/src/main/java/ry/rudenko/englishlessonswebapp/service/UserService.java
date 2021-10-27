@@ -26,6 +26,7 @@ public class UserService {
   public UserDto getOneUser(Long id) throws UserNotFoundException {
     UserEntity user = userRepo.findById(id).get();
     if (user == null) {
+      System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!");
       throw new UserNotFoundException("User not found");
     }
     return UserDto.toDto(user);
