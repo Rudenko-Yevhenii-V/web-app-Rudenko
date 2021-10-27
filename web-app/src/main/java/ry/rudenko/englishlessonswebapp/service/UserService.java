@@ -17,7 +17,7 @@ public class UserService {
   }
 
   public UserEntity registration(UserEntity user) throws UserAlreadyExistException {
-    if (userRepo.findByUsername(user.getUsername()) != null) {
+    if (userRepo.findByFirstName(user.getFirstName()) != null) {
       throw new UserAlreadyExistException("User with this name already exist");
     }
     return userRepo.save(user);
@@ -26,7 +26,6 @@ public class UserService {
   public UserDto getOneUser(Long id) throws UserNotFoundException {
     UserEntity user = userRepo.findById(id).get();
     if (user == null) {
-      System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!");
       throw new UserNotFoundException("User not found");
     }
     return UserDto.toDto(user);

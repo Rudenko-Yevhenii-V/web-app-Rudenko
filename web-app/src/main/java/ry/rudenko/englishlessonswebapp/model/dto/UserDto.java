@@ -7,17 +7,18 @@ import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 
 public class UserDto {
   private Long id;
-  private String userName;
+  private String firstName;
   private List<TodoDto> todos;
 
 public static  UserDto toDto(UserEntity userEntity){
   UserDto userDto = new UserDto();
   userDto.setId(userEntity.getId());
-  userDto.setUserName(userEntity.getUsername());
+  userDto.setFirstName(userEntity.getFirstName());
   userDto.setTodos(userEntity.getTodos().stream().map(TodoDto::toDto).collect(Collectors.toList()));
   return userDto;
 
 }
+
   public Long getId() {
     return id;
   }
@@ -26,12 +27,12 @@ public static  UserDto toDto(UserEntity userEntity){
     this.id = id;
   }
 
-  public String getUserName() {
-    return userName;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
   public List<TodoDto> getTodos() {

@@ -9,58 +9,76 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import javax.persistence.*;
+import java.time.Instant;
+import ry.rudenko.englishlessonswebapp.domains.UserRole;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "user_entity")
+@Table(name = "users_entity")
 public class UserEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id")
-private Long id;
+  Long id;
+
+  @NonNull
   @Column(unique = true)
-  private String username;
-  private String password;
+  String login;
+
+  @NonNull
+  String password;
+
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-  private List<TodoEntity> todos;
+  List<TodoEntity> todos;
 
-  public UserEntity() {
-  }
+  @NonNull
+  String firstName;
 
-  public List<TodoEntity> getTodos() {
-    return todos;
-  }
+  @NonNull
+  String lastName;
 
-  public void setTodos(List<TodoEntity> todos) {
-    this.todos = todos;
-  }
+  String middleName;
 
-  public Long getId() {
-    return id;
-  }
+  @NonNull
+  Instant birthday;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+  @NonNull
+  @Enumerated(EnumType.STRING)
+  UserRole role;
 
-  public String getUsername() {
-    return username;
-  }
+    @NonNull
+  @ManyToOne
+  LessonEntity lessonEntity;
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
+    public static UserEntity makeDefault(
+      String firstName,
+      String middleName,
+      String lastName,
+      String login,
+      String password,
+      Instant birthday,
+      UserRole role,
+        LessonEntity lessonEntity) {
+    return builder()
+        .firstName(firstName)
+        .middleName(middleName)
+        .lastName(lastName)
+        .login(login)
+        .password(password)
+        .birthday(birthday)
+        .role(role)
+        .lessonEntity(lessonEntity)
+        .build();
   }
 }
-
-
 
 
 
