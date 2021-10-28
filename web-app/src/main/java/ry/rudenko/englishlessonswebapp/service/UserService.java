@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ry.rudenko.englishlessonswebapp.model.dto.UserDto;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 import ry.rudenko.englishlessonswebapp.exception.UserAlreadyExistException;
-import ry.rudenko.englishlessonswebapp.exception.UserNotFoundException;
+import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.repository.UserRepo;
 
 @Service
@@ -23,10 +23,10 @@ public class UserService {
     return userRepo.save(user);
   }
 
-  public UserDto getOneUser(Long id) throws UserNotFoundException {
+  public UserDto getOneUser(Long id) throws NotFoundException {
     UserEntity user = userRepo.findById(id).get();
     if (user == null) {
-      throw new UserNotFoundException("User not found");
+      throw new NotFoundException("User not found");
     }
     return UserDto.toDto(user);
   }

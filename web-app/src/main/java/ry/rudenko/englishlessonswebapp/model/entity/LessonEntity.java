@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "school_class")
+@Table(name = "lessons")
 public class LessonEntity {
 
   @Id
@@ -23,10 +23,10 @@ public class LessonEntity {
 
   @NonNull
   @ManyToOne
-  @JoinColumn(name = "school_id", referencedColumnName = "id")
+  @JoinColumn(name = "theme_id", referencedColumnName = "id")
   ThemeEntity themeEntity;
 
-  @Column(name = "school_id", updatable = false, insertable = false)
+  @Column(name = "theme_id", updatable = false, insertable = false)
   Long schoolId;
 
   public static LessonEntity makeDefault(String name, ThemeEntity themeEntity) {

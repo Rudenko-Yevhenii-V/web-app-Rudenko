@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "psychologist")
+@Table(name = "admin")
 public class Admin {
 
   @Id

@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "school")
+@Table(name = "theme")
 public class ThemeEntity {
 
   @Id
@@ -27,7 +27,7 @@ public class ThemeEntity {
 
   @Builder.Default
   @OneToMany
-  @JoinColumn(name = "school_id", referencedColumnName = "id")
+  @JoinColumn(name = "theme_id", referencedColumnName = "id")
   List<LessonEntity> lessonEntities = new ArrayList<>();
 
   public static ThemeEntity makeDefault(String schoolName) {

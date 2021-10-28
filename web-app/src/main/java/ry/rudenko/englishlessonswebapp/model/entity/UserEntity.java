@@ -47,14 +47,14 @@ public class UserEntity {
 
   String middleName;
 
-  @NonNull
+//  @NonNull
   Instant birthday;
 
   @NonNull
   @Enumerated(EnumType.STRING)
   UserRole role;
 
-    @NonNull
+//    @NonNull
   @ManyToOne
   LessonEntity lessonEntity;
 
