@@ -21,7 +21,6 @@ public class ThemeEntity {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   Long id;
 
-  @Column(length = 10485760)
   @NonNull
   String name;
 

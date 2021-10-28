@@ -1,9 +1,9 @@
 package ry.rudenko.englishlessonswebapp.repository;
 
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 
-public interface UserRepo extends CrudRepository<UserEntity, Long> {
+public interface UserRepo extends JpaRepository<UserEntity, Long> {
   UserEntity findByFirstName(String firstName);
 }

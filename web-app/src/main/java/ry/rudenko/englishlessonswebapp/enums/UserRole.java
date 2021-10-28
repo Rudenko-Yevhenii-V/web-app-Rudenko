@@ -1,4 +1,4 @@
-package ry.rudenko.englishlessonswebapp.domains;
+package ry.rudenko.englishlessonswebapp.enums;
 
 public enum UserRole {
   STUDENT,

@@ -13,7 +13,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import java.time.Instant;
-import ry.rudenko.englishlessonswebapp.domains.UserRole;
+import ry.rudenko.englishlessonswebapp.enums.UserRole;
 
 @Data
 @Builder
