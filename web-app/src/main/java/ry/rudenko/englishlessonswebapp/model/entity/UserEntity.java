@@ -47,18 +47,18 @@ public class UserEntity {
 
   String middleName;
 
-//  @NonNull
+  @NonNull
   Instant birthday;
 
   @NonNull
   @Enumerated(EnumType.STRING)
   UserRole role;
 
-//    @NonNull
+  @NonNull
   @ManyToOne
   LessonEntity lessonEntity;
 
-    public static UserEntity makeDefault(
+  public static UserEntity makeDefault(
       String firstName,
       String middleName,
       String lastName,
@@ -66,7 +66,7 @@ public class UserEntity {
       String password,
       Instant birthday,
       UserRole role,
-        LessonEntity lessonEntity) {
+      LessonEntity lessonEntity) {
     return builder()
         .firstName(firstName)
         .middleName(middleName)

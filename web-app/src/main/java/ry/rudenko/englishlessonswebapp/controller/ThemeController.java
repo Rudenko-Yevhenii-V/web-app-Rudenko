@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import ry.rudenko.englishlessonswebapp.exception.BadRequestException;
 import ry.rudenko.englishlessonswebapp.factory.ThemeDtoFactory;
@@ -27,10 +26,7 @@ import ry.rudenko.englishlessonswebapp.repository.ThemeRepository;
 public class ThemeController {
 
   ThemeRepository themeRepository;
-
   ThemeDtoFactory themeDtoFactory;
-
-//  ControllerAuthenticationService authenticationService;
 
   public static final String FETCH_THEME = "/themes";
   public static final String CREATE_THEME = "/themes/{themeName}";
@@ -39,43 +35,44 @@ public class ThemeController {
   @GetMapping(FETCH_THEME)
   public ResponseEntity<List<ThemeDto>> fetchThemes(
       @RequestParam(defaultValue = "") String filter) {
+    try {
+      boolean isFiltered = !filter.trim().isEmpty();
 
-    boolean isFiltered = !filter.trim().isEmpty();
+      List<ThemeEntity> themes = themeRepository.findAllByFilter(isFiltered, filter);
 
-    List<ThemeEntity> themes = themeRepository.findAllByFilter(isFiltered, filter);
-
-    return ResponseEntity.ok(themeDtoFactory.createThemeDtoList(themes));
+      return ResponseEntity.ok(themeDtoFactory.createThemeDtoList(themes));
+    } catch (Exception e) {
+      throw new BadRequestException(String.format("An error has occurred! %s", e));
+    }
   }
 
   @PostMapping(CREATE_THEME)
-  public ResponseEntity<ThemeDto> createTheme(@PathVariable String themeName,
-      @RequestHeader(defaultValue = "") String token) {
+  public ResponseEntity<ThemeDto> createTheme(@PathVariable String themeName) {
+    try {
+      if (themeRepository.existsByName(themeName)) {
+        throw new BadRequestException(String.format("Theme  \"%s\" exist now!", themeName));
+      }
 
-//    authenticationService.authenticate(token);
+      ThemeEntity theme = themeRepository.saveAndFlush(
+          ThemeEntity.makeDefault(themeName)
+      );
 
-    if (themeRepository.existsByName(themeName)) {
-      throw new BadRequestException(String.format("Theme  \"%s\" exist now!", themeName));
+      return ResponseEntity.ok(themeDtoFactory.createThemeDto(theme));
+    } catch (Exception e) {
+      throw new BadRequestException(String.format("An error has occurred! %s", e));
     }
-
-    ThemeEntity theme = themeRepository.saveAndFlush(
-        ThemeEntity.makeDefault(themeName)
-    );
-
-    return ResponseEntity.ok(themeDtoFactory.createThemeDto(theme));
   }
 
   @DeleteMapping(DELETE_THEME)
-  public ResponseEntity<AckDto> deleteTheme(
-      @PathVariable Long themeId,
-      @RequestHeader(defaultValue = "") String token) {
-
-//    authenticationService.authenticate(token);
-
-    if (themeRepository.existsById(themeId)) {
-      themeRepository.deleteById(themeId);
+  public ResponseEntity<AckDto> deleteTheme(@PathVariable Long themeId) {
+    try {
+      if (themeRepository.existsById(themeId)) {
+        themeRepository.deleteById(themeId);
+      }
+      return ResponseEntity.ok(AckDto.makeDefault(true));
+    } catch (Exception e) {
+      throw new BadRequestException(String.format("An error has occurred! %s", e));
     }
-
-    return ResponseEntity.ok(AckDto.makeDefault(true));
   }
 }
 

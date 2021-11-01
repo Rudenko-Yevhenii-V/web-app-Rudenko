@@ -1,5 +1,6 @@
 package ry.rudenko.englishlessonswebapp.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +14,14 @@ import ry.rudenko.englishlessonswebapp.exception.UserAlreadyExistException;
 import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.service.UserService;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
   private final UserService userService;
 
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
+
 
   @PostMapping
   public ResponseEntity registration(@RequestBody UserEntity user) {

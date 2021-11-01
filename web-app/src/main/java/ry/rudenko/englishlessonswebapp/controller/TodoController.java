@@ -21,8 +21,6 @@ public class TodoController {
   @PostMapping
   public ResponseEntity createTodo(@RequestBody TodoEntity todo,
       @RequestParam Long userId) {
-    System.out.println("userId = " + userId);
-    System.out.println("todo = " + todo);
     try {
       return ResponseEntity.ok(todoService.createTodo(todo, userId));
     } catch (Exception e) {
