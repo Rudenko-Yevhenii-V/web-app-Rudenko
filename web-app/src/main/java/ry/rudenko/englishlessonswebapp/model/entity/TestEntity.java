@@ -23,8 +23,8 @@ public class TestEntity {
   @Column(length = 10485760)
   String name;
 
-  @Builder.Default
-  Boolean isStarted = false;
+//  @Builder.Default
+//  Boolean isStarted = false;
 
   @Builder.Default
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

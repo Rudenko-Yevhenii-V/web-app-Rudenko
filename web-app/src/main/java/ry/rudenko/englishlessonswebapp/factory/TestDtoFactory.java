@@ -41,7 +41,7 @@ public class TestDtoFactory {
   }
 
   public AnswerDto createAnswerDto(AnswerEntity entity) {
-    return AnswerDto.builder().id(entity.getId()).name(entity.getName())
+    return AnswerDto.builder().id(entity.getId()).name(entity.getText())
         .order(entity.getAnswerOrder()).build();
   }
 }

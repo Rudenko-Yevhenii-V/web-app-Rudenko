@@ -21,7 +21,7 @@ public class AnswerEntity {
   Integer answerOrder;
 
   @Column(length = 10000000)
-  String name;
+  String text;
 
   @ManyToOne
   @JoinColumn(name = "question_id", referencedColumnName = "id")
@@ -30,7 +30,11 @@ public class AnswerEntity {
   @Column(name = "question_id", updatable = false, insertable = false)
   Long questionId;
 
-  public static AnswerEntity makeDefault() {
-    return builder().build();
+  public static AnswerEntity makeDefault(String falseAnswer, Integer answerOrder) {
+
+    return builder()
+        .text(falseAnswer)
+        .answerOrder(answerOrder)
+        .build();
   }
 }

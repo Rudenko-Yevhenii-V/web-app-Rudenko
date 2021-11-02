@@ -25,6 +25,7 @@ import ry.rudenko.englishlessonswebapp.model.entity.TestEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.TestUserEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 import ry.rudenko.englishlessonswebapp.repository.AdminRepository;
+import ry.rudenko.englishlessonswebapp.repository.AnswerRepository;
 import ry.rudenko.englishlessonswebapp.repository.LessonRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestUserRepository;
@@ -47,6 +48,8 @@ public class TestController {
   AdminRepository adminRepository;
 
   TestDtoFactory testDtoFactory;
+
+  AnswerRepository answerRepository;
 
   public static final String FETCH_TESTS = "/tests";
   public static final String GET_TEST = "/tests/{testId}";
@@ -77,11 +80,17 @@ public class TestController {
   }
 
   @PostMapping(CREATE_OR_UPDATE_TEST)
-  public ResponseEntity<TestDto> createOrUpdateTest(
+  public ResponseEntity<TestDto> createOrUpdateTest(@RequestParam String falseAnswers,
+      @RequestParam Integer answerOrder,
       @RequestBody TestDto test) {
 
-
+    List<String> falseAnswerList = Arrays.stream(falseAnswers.split(","))
+        .filter(it -> !it.trim().isEmpty())
+        .collect(Collectors.toList());
     TestEntity testEntity = convertTestToEntity(test);
+    falseAnswerList.stream().forEach(s -> {
+      answerRepository.saveAndFlush(AnswerEntity.makeDefault(s, answerOrder));
+    });
 
     testEntity = testRepository.saveAndFlush(testEntity);
 
@@ -200,10 +209,8 @@ public class TestController {
   }
 
   private AnswerEntity convertAnswerToEntity(AnswerDto dto) {
-    AnswerEntity answer = AnswerEntity.makeDefault();
+    AnswerEntity answer = AnswerEntity.makeDefault(dto.getName(), dto.getOrder());
     answer.setId(dto.getId());
-    answer.setName(dto.getName());
-    answer.setAnswerOrder(dto.getOrder());
     return answer;
   }
 }

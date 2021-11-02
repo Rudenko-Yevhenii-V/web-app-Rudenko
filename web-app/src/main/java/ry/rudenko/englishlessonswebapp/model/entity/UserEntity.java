@@ -62,15 +62,19 @@ public class UserEntity {
 
   public List<TodoDto> getTodoList() {
     List<TodoDto> todoDtos = new ArrayList<>();
-    for (TodoEntity todo : todos) {
-      todoDtos.add(TodoDto.toDto(todo)) ;
+    if(todos != null) {
+      for (TodoEntity todo : todos) {
+        todoDtos.add(TodoDto.toDto(todo));
+      }
     }
     return todoDtos;
   }
   public List<LessonDto> getLessonList() {
     List<LessonDto> lessonDtos = new ArrayList<>();
-    for (LessonEntity lessonEntity : lessons) {
-      lessonDtos.add(LessonDto.toDto(lessonEntity)) ;
+    if (lessons != null) {
+      for (LessonEntity lessonEntity : lessons) {
+        lessonDtos.add(LessonDto.toDto(lessonEntity));
+      }
     }
     return lessonDtos;
   }
