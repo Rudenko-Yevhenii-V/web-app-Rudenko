@@ -8,61 +8,44 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "todo")
 public class TodoEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-  private String title;
-  private Boolean completed;
-  private String description;
+   Long id;
+   String title;
+   Boolean completed;
+   String description;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private UserEntity user;
+   UserEntity user;
 
-  public TodoEntity() {
+  public static TodoEntity makeDefault(
+      String title,
+      Boolean completed,
+      String description,
+      UserEntity user) {
+    return builder()
+        .title(title)
+        .completed(completed)
+        .description(description)
+        .user(user)
+        .build();
   }
 
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public Boolean getCompleted() {
-    return completed;
-  }
-
-  public void setCompleted(Boolean completed) {
-    this.completed = completed;
-  }
-
-  public UserEntity getUser() {
-    return user;
-  }
-
-  public void setUser(UserEntity user) {
-    this.user = user;
-  }
 }

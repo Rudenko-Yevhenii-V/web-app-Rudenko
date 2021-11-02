@@ -1,5 +1,6 @@
 package ry.rudenko.englishlessonswebapp.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import java.time.Instant;
 import ry.rudenko.englishlessonswebapp.enums.UserRole;
+import ry.rudenko.englishlessonswebapp.model.dto.LessonDto;
+import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
 
 @Data
 @Builder
@@ -54,9 +57,23 @@ public class UserEntity {
   @Enumerated(EnumType.STRING)
   UserRole role;
 
-  @NonNull
-  @ManyToOne
-  LessonEntity lessonEntity;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  List<LessonEntity> lessons;
+
+  public List<TodoDto> getTodoList() {
+    List<TodoDto> todoDtos = new ArrayList<>();
+    for (TodoEntity todo : todos) {
+      todoDtos.add(TodoDto.toDto(todo)) ;
+    }
+    return todoDtos;
+  }
+  public List<LessonDto> getLessonList() {
+    List<LessonDto> lessonDtos = new ArrayList<>();
+    for (LessonEntity lessonEntity : lessons) {
+      lessonDtos.add(LessonDto.toDto(lessonEntity)) ;
+    }
+    return lessonDtos;
+  }
 
   public static UserEntity makeDefault(
       String firstName,
@@ -65,8 +82,7 @@ public class UserEntity {
       String login,
       String password,
       Instant birthday,
-      UserRole role,
-      LessonEntity lessonEntity) {
+      UserRole role) {
     return builder()
         .firstName(firstName)
         .middleName(middleName)
@@ -75,7 +91,6 @@ public class UserEntity {
         .password(password)
         .birthday(birthday)
         .role(role)
-        .lessonEntity(lessonEntity)
         .build();
   }
 }

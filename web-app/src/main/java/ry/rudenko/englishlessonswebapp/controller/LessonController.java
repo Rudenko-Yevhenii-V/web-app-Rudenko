@@ -27,13 +27,18 @@ public class LessonController {
   public static final String FETCH_LESSONS = "/themes/{themeId}/lessons";
   public static final String CREATE_LESSONS = "/themes/{themeId}/lessons/{lessonsName}";
   public static final String DELETE_LESSON = "/themes/{themeId}/lessons/{lessonId}";
+  public static final String ADD_TO_USER_LESSON = "/themes/{themeId}/lessons/{lessonId}/{user_id}";
 
   @GetMapping(FETCH_LESSONS)
   public ResponseEntity<List<LessonDto>> fetchLessons(@PathVariable Long themeId,
       @RequestParam(defaultValue = "") String prefix) {
     return ResponseEntity.ok(lessonService.createLessonDtoList(themeId, prefix));
   }
-
+  @GetMapping(ADD_TO_USER_LESSON)
+  public ResponseEntity<LessonDto> lessonToUser( @PathVariable Long themeId,
+      @PathVariable Long lessonId, @PathVariable Long user_id) {
+    return ResponseEntity.ok(lessonService.lessonToUser(lessonId, user_id));
+  }
   @PostMapping(CREATE_LESSONS)
   public ResponseEntity<LessonDto> createLesson(@PathVariable Long themeId,
       @PathVariable String lessonsName) {

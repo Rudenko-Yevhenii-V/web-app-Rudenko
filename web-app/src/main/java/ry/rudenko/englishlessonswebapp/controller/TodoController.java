@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
 import ry.rudenko.englishlessonswebapp.model.entity.TodoEntity;
 import ry.rudenko.englishlessonswebapp.service.TodoService;
 
@@ -19,10 +20,10 @@ public class TodoController {
   private TodoService todoService;
 
   @PostMapping
-  public ResponseEntity createTodo(@RequestBody TodoEntity todo,
+  public ResponseEntity createTodo(@RequestBody TodoDto tododto,
       @RequestParam Long userId) {
     try {
-      return ResponseEntity.ok(todoService.createTodo(todo, userId));
+      return ResponseEntity.ok(todoService.createEntity(tododto, userId));
     } catch (Exception e) {
       return ResponseEntity.badRequest().body("Произошла ошибка");
     }

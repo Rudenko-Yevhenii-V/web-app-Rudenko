@@ -19,6 +19,7 @@ public class LessonEntity {
   Long id;
 
   @NonNull
+  @Column(length = 10485760)
   String name;
 
   @NonNull
@@ -28,6 +29,10 @@ public class LessonEntity {
 
   @Column(name = "theme_id", updatable = false, insertable = false)
   Long schoolId;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private UserEntity user;
 
   public static LessonEntity makeDefault(String name, ThemeEntity themeEntity) {
     return builder()
