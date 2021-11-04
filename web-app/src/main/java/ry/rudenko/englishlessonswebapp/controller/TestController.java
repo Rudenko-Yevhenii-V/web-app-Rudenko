@@ -34,7 +34,7 @@ import ry.rudenko.englishlessonswebapp.service.TestService;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@Controller
+@RestController
 @Transactional
 public class TestController {
 

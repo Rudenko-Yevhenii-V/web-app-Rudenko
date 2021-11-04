@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ry.rudenko.englishlessonswebapp.enums.UserRole;
 import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.factory.UserDtoFactory;
@@ -29,7 +30,7 @@ import ry.rudenko.englishlessonswebapp.util.StringChecker;
 @Log4j2
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@Controller
+@RestController
 @Transactional
 public class UserController {
 
@@ -61,7 +62,6 @@ public class UserController {
       @RequestParam(defaultValue = "") String middleName,
       @RequestParam String lastName,
       @RequestParam UserRole userRole) {
-
     return ResponseEntity.ok(userService.createUserDto(birthday, firstName, middleName, lastName, userRole));
   }
 
@@ -75,7 +75,6 @@ public class UserController {
   public ResponseEntity<Long> getUserIdByLoginAndPassword(
       @RequestParam String login,
       @RequestParam String password) {
-
     return ResponseEntity.ok(userService.getUserIdByLoginAndPassword(login, password));
   }
 
