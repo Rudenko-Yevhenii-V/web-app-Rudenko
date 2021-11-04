@@ -30,6 +30,7 @@ import ry.rudenko.englishlessonswebapp.repository.LessonRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestUserRepository;
 import ry.rudenko.englishlessonswebapp.repository.UserRepository;
+import ry.rudenko.englishlessonswebapp.service.TestService;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -37,19 +38,7 @@ import ry.rudenko.englishlessonswebapp.repository.UserRepository;
 @Transactional
 public class TestController {
 
-  TestRepository testRepository;
-
-  UserRepository userRepository;
-
-  TestUserRepository testUserRepository;
-
-  LessonRepository lessonRepository;
-
-  AdminRepository adminRepository;
-
-  TestDtoFactory testDtoFactory;
-
-  AnswerRepository answerRepository;
+  TestService testService;
 
   public static final String FETCH_TESTS = "/tests";
   public static final String GET_TEST = "/tests/{testId}";
@@ -59,61 +48,25 @@ public class TestController {
 
   @GetMapping(FETCH_TESTS)
   public ResponseEntity<List<TestDto>> fetchTests(@RequestParam(defaultValue = "") String filter) {
-
-    boolean isFiltered = !filter.trim().isEmpty();
-
-    List<TestEntity> tests = testRepository.findAllByFilter(isFiltered, filter);
-
-    return ResponseEntity.ok(testDtoFactory.createTestDtoList(tests));
+    return ResponseEntity.ok(testService.createTestDtoList(filter));
   }
 
   @GetMapping(GET_TEST)
   public ResponseEntity<TestDto> getTest(@PathVariable Long testId) {
-
-    TestEntity test = testRepository
-        .findById(testId)
-        .orElseThrow(() ->
-            new NotFoundException(String.format("Test with id  \"%s\" not found.", testId))
-        );
-
-    return ResponseEntity.ok(testDtoFactory.createTestDto(test));
+    return ResponseEntity.ok(testService.createTestDto(testId));
   }
 
   @PostMapping(CREATE_OR_UPDATE_TEST)
   public ResponseEntity<TestDto> createOrUpdateTest(@RequestParam String falseAnswers,
       @RequestParam Integer answerOrder,
       @RequestBody TestDto test) {
-
-    List<String> falseAnswerList = Arrays.stream(falseAnswers.split(","))
-        .filter(it -> !it.trim().isEmpty())
-        .collect(Collectors.toList());
-    TestEntity testEntity = convertTestToEntity(test);
-    falseAnswerList.stream().forEach(s -> {
-      answerRepository.saveAndFlush(AnswerEntity.makeDefault(s, answerOrder));
-    });
-
-    testEntity = testRepository.saveAndFlush(testEntity);
-
-    return ResponseEntity.ok(testDtoFactory.createTestDto(testEntity));
+    return ResponseEntity.ok(testService.createTestDtoServ(falseAnswers, answerOrder, test));
   }
 
   @DeleteMapping(DELETE_TEST)
   public ResponseEntity<AckDto> deleteTest(
       @PathVariable Long testId) {
-
-    testRepository
-        .findById(testId)
-        .ifPresent(test -> {
-
-          test.getQuestions().forEach(it -> it.getAnswers().clear());
-          test.getQuestions().clear();
-
-          test = testRepository.saveAndFlush(test);
-
-          testRepository.delete(test);
-        });
-
-    return ResponseEntity.ok(AckDto.makeDefault(true));
+    return ResponseEntity.ok(testService.deleteTest(testId));
   }
 
   @PostMapping(COMPLETE_TEST)
@@ -123,94 +76,6 @@ public class TestController {
       @PathVariable Long userId,
       @PathVariable Long adminId,
       @RequestParam String answers) {
-
-    TestEntity test = getTestOrThrowNotFound(testId);
-
-    List<String> answerList = Arrays.stream(answers.split(","))
-        .filter(it -> !it.trim().isEmpty())
-        .collect(Collectors.toList());
-
-    if (answerList.size() != test.getQuestions().size()) {
-      throw new BadRequestException("You haven't done all qestions");
-    }
-
-    lessonRepository.findById(lessonId).orElseThrow(() ->
-            new NotFoundException(String.format("Lesson with id  \"%s\" not found.", lessonId))
-        );
-
-    UserEntity user = userRepository
-        .findById(userId)
-        .orElseThrow(() ->
-            new NotFoundException(String.format("User with id  \"%s\" not found.", userId))
-        );
-
-    Admin admin = adminRepository
-        .findById(adminId)
-        .orElseThrow(() ->
-            new NotFoundException(String.format("Admin with id  \"%s\" not found.", adminId))
-        );
-
-    testUserRepository.saveAndFlush(
-        TestUserEntity.builder()
-            .answers(answers)
-            .user(user)
-            .test(test)
-            .admin(admin)
-            .build()
-    );
-
-    return ResponseEntity.ok(AckDto.makeDefault(true));
-  }
-
-  private TestEntity getTestOrThrowNotFound(Long testId) {
-    return testRepository
-        .findById(testId)
-        .orElseThrow(() ->
-            new NotFoundException(String.format("Test with id  \"%s\" not found.", testId))
-        );
-  }
-
-  private TestEntity convertTestToEntity(TestDto dto) {
-    Long testId = dto.getId();
-    TestEntity test;
-    if (testId == null) {
-      test = TestEntity.makeDefault();
-    } else {
-      test = testRepository
-          .findById(testId)
-          .orElseThrow(() ->
-              new NotFoundException(String.format("Test with id  \"%s\" not found.", testId))
-          );
-    }
-    test.setName(dto.getName());
-    test.getQuestions().clear();
-    test.getQuestions().addAll(
-        dto.getQuestions()
-            .stream()
-            .map(this::convertQuestionToEntity)
-            .collect(Collectors.toList())
-    );
-    return test;
-  }
-
-  private QuestionEntity convertQuestionToEntity(QuestionDto dto) {
-    QuestionEntity question = QuestionEntity.makeDefault();
-    question.setId(dto.getId());
-    question.setQuestionOrder(dto.getOrder());
-    question.setText(dto.getText());
-    question.getAnswers().clear();
-    question.getAnswers().addAll(
-        dto.getAnswers()
-            .stream()
-            .map(this::convertAnswerToEntity)
-            .collect(Collectors.toList())
-    );
-    return question;
-  }
-
-  private AnswerEntity convertAnswerToEntity(AnswerDto dto) {
-    AnswerEntity answer = AnswerEntity.makeDefault(dto.getName(), dto.getOrder());
-    answer.setId(dto.getId());
-    return answer;
+    return ResponseEntity.ok(testService.completeTest(lessonId, testId, userId, adminId, answers));
   }
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
-import ry.rudenko.englishlessonswebapp.model.entity.TodoEntity;
 import ry.rudenko.englishlessonswebapp.service.TodoService;
 
 @RestController
