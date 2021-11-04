@@ -2,15 +2,14 @@ package ry.rudenko.englishlessonswebapp.controller;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 import javax.transaction.Transactional;
+import javax.validation.constraints.Min;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.ExtensionMethod;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,19 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ry.rudenko.englishlessonswebapp.enums.UserRole;
-import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
-import ry.rudenko.englishlessonswebapp.factory.UserDtoFactory;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
 import ry.rudenko.englishlessonswebapp.model.dto.UserDto;
-import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
-import ry.rudenko.englishlessonswebapp.repository.UserRepository;
 import ry.rudenko.englishlessonswebapp.service.UserService;
-import ry.rudenko.englishlessonswebapp.util.StringChecker;
 
 @Log4j2
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RestController
+@Validated
 @Transactional
 public class UserController {
 
@@ -57,10 +52,10 @@ public class UserController {
 
   @PostMapping(CREATE_USER)
   public ResponseEntity<UserDto> createUser(
-      @RequestParam Instant birthday,
-      @RequestParam String firstName,
-      @RequestParam(defaultValue = "") String middleName,
-      @RequestParam String lastName,
+       @RequestParam  Instant birthday,
+       @RequestParam String firstName,
+       @RequestParam(defaultValue = "") String middleName,
+       @RequestParam @Min(value = 4, message = "Last Name should have at least 4 characters!") String lastName,
       @RequestParam UserRole userRole) {
     return ResponseEntity.ok(userService.createUserDto(birthday, firstName, middleName, lastName, userRole));
   }
