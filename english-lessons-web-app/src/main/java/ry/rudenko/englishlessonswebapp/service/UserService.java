@@ -1,14 +1,11 @@
 package ry.rudenko.englishlessonswebapp.service;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import ry.rudenko.englishlessonswebapp.enums.UserRole;
 import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.factory.UserDtoFactory;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
@@ -25,12 +22,13 @@ public class UserService {
 
   UserRepository userRepository;
   UserDtoFactory userDtoFactory;
-  private static final int PASSWORD_LENGTH = 10;
+//  private static final int PASSWORD_LENGTH = 10;
 
 
   public List<UserDto> createUserDtoList(String filterLastName, Long lessonId) {
     boolean isFiltered = !filterLastName.trim().isEmpty();
-    List<UserEntity> users = userRepository.findAllByFilterAndLessonEntityId(isFiltered, filterLastName, lessonId);
+    List<UserEntity> users = userRepository.findAllByFilterAndLessonEntityId(isFiltered,
+        filterLastName, lessonId);
     return userDtoFactory.createUserDtoList(users);
   }
 
@@ -40,36 +38,31 @@ public class UserService {
     return userDtoFactory.createUserDtoList(users);
   }
 
-  public UserDto createUserDto(Instant birthday, String firstName, String middleName, String lastName, UserRole userRole) {
-    firstName = firstName.trim();
-    lastName = lastName.trim();
-    firstName.checkOnEmpty("firstName");
-    lastName.checkOnEmpty("lastName");
-    middleName = middleName.trim().isEmpty() ? null : middleName;
-    String login = makeLogin(firstName, lastName);
-    String password = makePassword();
+  public UserDto createUserDto(UserDto userDto) {
+
     UserEntity user = userRepository.saveAndFlush(
         UserEntity.makeDefault(
-            firstName,
-            middleName,
-            lastName,
-            login,
-            password,
-            birthday,
-            userRole
+            userDto.getFirstName(),
+            userDto.getMiddleName(),
+            userDto.getLastName(),
+            userDto.getLogin(),
+            userDto.getPassword(),
+            userDto.getBirthday(),
+            userDto.getRole()
         )
     );
     return userDtoFactory.createUserDto(user);
   }
-  private String makeLogin(String firstName, String lastName) {
-    String firstNameTransliterated = (firstName.toLowerCase());
-    String lastNameTransliterated = (lastName.toLowerCase());
-    return String.format("%s.%s", firstNameTransliterated.charAt(0), lastNameTransliterated);
-  }
 
-  private String makePassword() {
-    return UUID.randomUUID().toString().replaceAll("-", "").substring(0, PASSWORD_LENGTH);
-  }
+//  private String makeLogin(String firstName, String lastName) {
+//    String firstNameTransliterated = (firstName.toLowerCase());
+//    String lastNameTransliterated = (lastName.toLowerCase());
+//    return String.format("%s.%s", firstNameTransliterated.charAt(0), lastNameTransliterated);
+//  }
+
+//  private String makePassword() {
+//    return UUID.randomUUID().toString().replaceAll("-", "").substring(0, PASSWORD_LENGTH);
+//  }
 
   public AckDto deleteUser(Long userId) {
     if (userRepository.existsById(userId)) {

@@ -1,5 +1,8 @@
 package ry.rudenko.englishlessonswebapp.service;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
@@ -8,11 +11,14 @@ import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 import ry.rudenko.englishlessonswebapp.repository.TodoRepo;
 import ry.rudenko.englishlessonswebapp.repository.UserRepository;
 
+
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Service
 public class TodoService {
-  @Autowired
+
   private TodoRepo todoRepo;
-  @Autowired
+
   private UserRepository userRepo;
 
   public TodoDto createEntity(TodoDto tododto, Long userId) {

@@ -57,27 +57,29 @@ public class UserEntity {
   @Enumerated(EnumType.STRING)
   UserRole role;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-  List<LessonEntity> lessons;
 
-  public List<TodoDto> getTodoList() {
-    List<TodoDto> todoDtos = new ArrayList<>();
-    if(todos != null) {
-      for (TodoEntity todo : todos) {
-        todoDtos.add(TodoDto.toDto(todo));
-      }
-    }
-    return todoDtos;
-  }
-  public List<LessonDto> getLessonList() {
-    List<LessonDto> lessonDtos = new ArrayList<>();
-    if (lessons != null) {
-      for (LessonEntity lessonEntity : lessons) {
-        lessonDtos.add(LessonDto.toDto(lessonEntity));
-      }
-    }
-    return lessonDtos;
-  }
+  @ManyToOne
+  @JoinColumn(name = "lesson_id")
+  private LessonEntity lessons;
+
+//  public List<TodoDto> getTodoList() {
+//    List<TodoDto> todoDtos = new ArrayList<>();
+//    if(todos != null) {
+//      for (TodoEntity todo : todos) {
+//        todoDtos.add(TodoDto.toDto(todo));
+//      }
+//    }
+//    return todoDtos;
+//  }
+//  public List<LessonDto> getLessonList() {
+//    List<LessonDto> lessonDtos = new ArrayList<>();
+//    if (lessons != null) {
+//      for (LessonEntity lessonEntity : lessons) {
+//        lessonDtos.add(LessonDto.toDto(lessonEntity));
+//      }
+//    }
+//    return lessonDtos;
+//  }
 
   public static UserEntity makeDefault(
       String firstName,

@@ -12,7 +12,7 @@ public class UserDtoFactory {
 
   public UserDto createUserDto(UserEntity entity) {
     return UserDto.builder()
-        .id(entity.getId())
+
         .firstName(entity.getFirstName())
         .middleName(entity.getMiddleName())
         .lastName(entity.getLastName())
@@ -20,8 +20,6 @@ public class UserDtoFactory {
         .password(entity.getPassword())
         .birthday(entity.getBirthday())
         .role(entity.getRole())
-        .lessons(entity.getLessonList())
-        .todos(entity.getTodoList())
         .build();
   }
 

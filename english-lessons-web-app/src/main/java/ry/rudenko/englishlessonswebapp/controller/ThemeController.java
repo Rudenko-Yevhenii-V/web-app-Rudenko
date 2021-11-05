@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ry.rudenko.englishlessonswebapp.Routes;
 import ry.rudenko.englishlessonswebapp.exception.BadRequestException;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
 import ry.rudenko.englishlessonswebapp.model.dto.ThemeDto;
@@ -22,15 +24,12 @@ import ry.rudenko.englishlessonswebapp.service.ThemeService;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RestController
 @Transactional
+@RequestMapping(Routes.API_ROOT)
 public class ThemeController {
 
   ThemeService themeService;
 
-  public static final String FETCH_THEME = "/themes";
-  public static final String CREATE_THEME = "/themes/{themeName}";
-  public static final String DELETE_THEME = "/themes/{themeId}";
-
-  @GetMapping(FETCH_THEME)
+  @GetMapping(Routes.FETCH_THEME)
   public ResponseEntity<List<ThemeDto>> fetchThemes(
       @RequestParam(defaultValue = "") String filter) {
     try {
@@ -40,7 +39,7 @@ public class ThemeController {
     }
   }
 
-  @PostMapping(CREATE_THEME)
+  @PostMapping(Routes.CREATE_THEME)
   public ResponseEntity<ThemeDto> createTheme(@PathVariable String themeName) {
     try {
       return ResponseEntity.ok(themeService.createThemeDto(themeName));
@@ -49,7 +48,7 @@ public class ThemeController {
     }
   }
 
-  @DeleteMapping(DELETE_THEME)
+  @DeleteMapping(Routes.DELETE_THEME)
   public ResponseEntity<AckDto> deleteTheme(@PathVariable Long themeId) {
     try {
       return ResponseEntity.ok(themeService.deleteTheme(themeId));

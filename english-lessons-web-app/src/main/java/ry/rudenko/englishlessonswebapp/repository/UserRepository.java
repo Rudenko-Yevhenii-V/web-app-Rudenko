@@ -18,8 +18,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
       "ORDER BY u.lastName, u.firstName")
   List<UserEntity> findAllByFilter(boolean isFiltered, String filter);
 
-  @Query("SELECT u FROM UserEntity u LEFT JOIN LessonEntity l ON u.id=l.user.id"
-      + " where l.id =:lessonEntityId and (:isFiltered = FALSE " +
+  @Query("SELECT u FROM UserEntity u "
+      + " where u.lessons.id =:lessonEntityId and (:isFiltered = FALSE " +
       "OR LOWER(u.firstName) LIKE LOWER(CONCAT('%', :filter, '%'))" +
       "OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :filter, '%'))" +
       ") " +

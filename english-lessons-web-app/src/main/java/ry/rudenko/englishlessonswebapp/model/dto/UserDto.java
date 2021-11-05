@@ -23,8 +23,7 @@ import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDto {
 
-  @NonNull
-  Long id;
+
 
   @NonNull
   String firstName;
@@ -47,9 +46,6 @@ public class UserDto {
   UserRole role;
 
 
-
-  List<TodoDto> todos;
-  List<LessonDto> lessons;
 }
 
 

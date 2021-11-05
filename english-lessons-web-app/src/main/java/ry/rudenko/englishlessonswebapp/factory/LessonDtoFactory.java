@@ -19,7 +19,7 @@ import ry.rudenko.englishlessonswebapp.model.entity.LessonEntity;
     public LessonDto createLessonDto(LessonEntity entity) {
       return LessonDto.builder()
           .id(entity.getId())
-          .name(entity.getName())
+          .text(entity.getText())
           .theme(themeDtoFactory.createThemeDto(entity.getThemeEntity()))
           .build();
     }

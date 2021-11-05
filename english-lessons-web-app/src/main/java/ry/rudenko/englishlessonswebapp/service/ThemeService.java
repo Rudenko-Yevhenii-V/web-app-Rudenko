@@ -2,6 +2,7 @@ package ry.rudenko.englishlessonswebapp.service;
 
 import java.util.List;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,17 +13,12 @@ import ry.rudenko.englishlessonswebapp.model.dto.ThemeDto;
 import ry.rudenko.englishlessonswebapp.model.entity.ThemeEntity;
 import ry.rudenko.englishlessonswebapp.repository.ThemeRepository;
 
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Service
 public class ThemeService {
   ThemeRepository themeRepository;
   ThemeDtoFactory themeDtoFactory;
-
-  public ThemeService(ThemeRepository themeRepository,
-      ThemeDtoFactory themeDtoFactory) {
-    this.themeRepository = themeRepository;
-    this.themeDtoFactory = themeDtoFactory;
-  }
 
   public List<ThemeDto> createThemeDtoList(String filter) {
     boolean isFiltered = !filter.trim().isEmpty();

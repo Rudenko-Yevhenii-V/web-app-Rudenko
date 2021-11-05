@@ -27,10 +27,6 @@ public class TestUserEntity {
   @ManyToOne
   TestEntity test;
 
-  @NonNull
-  @ManyToOne
-  Admin admin;
-
   @Column(length = 10485760)
   @NonNull
   String answers;

@@ -1,5 +1,6 @@
 package ry.rudenko.englishlessonswebapp.model.entity;
 
+import java.util.List;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,7 +21,7 @@ public class LessonEntity {
 
   @NonNull
   @Column(length = 10485760)
-  String name;
+  String text;
 
   @NonNull
   @ManyToOne
@@ -30,13 +31,12 @@ public class LessonEntity {
   @Column(name = "theme_id", updatable = false, insertable = false)
   Long schoolId;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private UserEntity user;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
+  List<UserEntity> users;
 
-  public static LessonEntity makeDefault(String name, ThemeEntity themeEntity) {
+  public static LessonEntity makeDefault(String text, ThemeEntity themeEntity) {
     return builder()
-        .name(name)
+        .text(text)
         .themeEntity(themeEntity)
         .build();
   }

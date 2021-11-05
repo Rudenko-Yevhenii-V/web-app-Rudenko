@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import ry.rudenko.englishlessonswebapp.exception.BadRequestException;
@@ -13,19 +14,19 @@ import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
 import ry.rudenko.englishlessonswebapp.model.dto.AnswerDto;
 import ry.rudenko.englishlessonswebapp.model.dto.QuestionDto;
 import ry.rudenko.englishlessonswebapp.model.dto.TestDto;
-import ry.rudenko.englishlessonswebapp.model.entity.Admin;
 import ry.rudenko.englishlessonswebapp.model.entity.AnswerEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.QuestionEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.TestEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.TestUserEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
-import ry.rudenko.englishlessonswebapp.repository.AdminRepository;
 import ry.rudenko.englishlessonswebapp.repository.AnswerRepository;
 import ry.rudenko.englishlessonswebapp.repository.LessonRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestUserRepository;
 import ry.rudenko.englishlessonswebapp.repository.UserRepository;
 
+
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Service
 public class TestService {
@@ -36,20 +37,6 @@ public class TestService {
    UserRepository userRepository;
    TestUserRepository testUserRepository;
    LessonRepository lessonRepository;
-   AdminRepository adminRepository;
-
-  public TestService(TestRepository testRepository,
-      TestDtoFactory testDtoFactory, AnswerRepository answerRepository,
-      UserRepository userRepository, TestUserRepository testUserRepository,
-      LessonRepository lessonRepository, AdminRepository adminRepository) {
-    this.testRepository = testRepository;
-    this.testDtoFactory = testDtoFactory;
-    this.answerRepository = answerRepository;
-    this.userRepository = userRepository;
-    this.testUserRepository = testUserRepository;
-    this.lessonRepository = lessonRepository;
-    this.adminRepository = adminRepository;
-  }
 
   public List<TestDto> createTestDtoList(String filter) {
     boolean isFiltered = !filter.trim().isEmpty();
@@ -136,8 +123,7 @@ public class TestService {
     return AckDto.makeDefault(true);
   }
 
-  public AckDto completeTest(Long lessonId, Long testId, Long userId, Long adminId,
-      String answers) {
+  public AckDto completeTest(Long lessonId, Long testId, Long userId, String answers) {
     TestEntity test = getTestOrThrowNotFound(testId);
 
     List<String> answerList = Arrays.stream(answers.split(","))
@@ -158,18 +144,13 @@ public class TestService {
             new NotFoundException(String.format("User with id  \"%s\" not found.", userId))
         );
 
-    Admin admin = adminRepository
-        .findById(adminId)
-        .orElseThrow(() ->
-            new NotFoundException(String.format("Admin with id  \"%s\" not found.", adminId))
-        );
+
 
     testUserRepository.saveAndFlush(
         TestUserEntity.builder()
             .answers(answers)
             .user(user)
             .test(test)
-            .admin(admin)
             .build()
     );
 

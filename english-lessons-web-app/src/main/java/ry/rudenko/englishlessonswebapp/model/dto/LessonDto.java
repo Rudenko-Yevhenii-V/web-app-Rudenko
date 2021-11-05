@@ -24,14 +24,14 @@ public class LessonDto {
 
   @NonNull
   @Column(length = 10485760)
-  String name;
+  String text;
 
   @NonNull
   ThemeDto theme;
 
   public static LessonDto toDto(LessonEntity lessonEntity) {
     LessonDto model = new LessonDto();
-    model.setName(lessonEntity.getName());
+    model.setText(lessonEntity.getText());
     model.setTheme(ThemeDto.builder()
             .id(lessonEntity.getThemeEntity().getId())
             .name(lessonEntity.getThemeEntity().getName())
