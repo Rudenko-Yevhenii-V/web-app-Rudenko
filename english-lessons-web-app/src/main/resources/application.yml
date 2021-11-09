@@ -14,21 +14,12 @@ spring:
     ddl-auto: update
 
 
-#spring.jpa.hibernate.ddl-auto=create-drop
-
-
-## swagger
-#api.version=1.0
-#swagger.enabled=true
-#swagger.title=national credit API
-#swagger.description=Sample Swagger implementation for the `test web api` service, leveraging annotations at the controller-method level.
-#swagger.useDefaultResponseMessages=false
-#swagger.enableUrlTemplating=false
-#swagger.deepLinking=true
-#swagger.defaultModelsExpandDepth=1
-#swagger.defaultModelExpandDepth=1
-#swagger.displayOperationId=false
-#swagger.displayRequestDuration=false
-#swagger.filter=false
-#swagger.maxDisplayedTags=0
-#swagger.showExtensions=false;
+auth:
+  cookie:
+    auth: AUTH-TOKEN
+    refresh: REFRESH-TOKEN
+    secret: ljhdsl;ghiopbmispvgspmvgjca;qdfs
+    expiration-auth: 600000000
+    expiration-refresh: 31536000
+    path: /
+debug: false

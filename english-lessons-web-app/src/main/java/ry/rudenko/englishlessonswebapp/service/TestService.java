@@ -23,7 +23,7 @@ import ry.rudenko.englishlessonswebapp.repository.AnswerRepository;
 import ry.rudenko.englishlessonswebapp.repository.LessonRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestUserRepository;
-import ry.rudenko.englishlessonswebapp.repository.UserRepository;
+import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 
 
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class TestService {
    TestRepository testRepository;
    TestDtoFactory testDtoFactory;
    AnswerRepository answerRepository;
-   UserRepository userRepository;
+   UserEntityRepository userRepository;
    TestUserRepository testUserRepository;
    LessonRepository lessonRepository;
 

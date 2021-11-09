@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
   UserEntity findByFirstName(String firstName);
 
   @Query("SELECT u FROM UserEntity u " +

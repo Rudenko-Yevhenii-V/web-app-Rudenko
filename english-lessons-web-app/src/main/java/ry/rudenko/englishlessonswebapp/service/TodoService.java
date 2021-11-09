@@ -9,7 +9,7 @@ import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
 import ry.rudenko.englishlessonswebapp.model.entity.TodoEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 import ry.rudenko.englishlessonswebapp.repository.TodoRepo;
-import ry.rudenko.englishlessonswebapp.repository.UserRepository;
+import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 
 
 @RequiredArgsConstructor
@@ -19,7 +19,7 @@ public class TodoService {
 
   private TodoRepo todoRepo;
 
-  private UserRepository userRepo;
+  private UserEntityRepository userRepo;
 
   public TodoDto createEntity(TodoDto tododto, Long userId) {
     UserEntity user = userRepo.findById(userId).get();

@@ -11,7 +11,7 @@ import ry.rudenko.englishlessonswebapp.factory.UserDtoFactory;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
 import ry.rudenko.englishlessonswebapp.model.dto.UserDto;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
-import ry.rudenko.englishlessonswebapp.repository.UserRepository;
+import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 import ry.rudenko.englishlessonswebapp.util.StringChecker;
 
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ import ry.rudenko.englishlessonswebapp.util.StringChecker;
 @Service
 public class UserService {
 
-  UserRepository userRepository;
+  UserEntityRepository userRepository;
   UserDtoFactory userDtoFactory;
 //  private static final int PASSWORD_LENGTH = 10;
 

@@ -19,7 +19,7 @@ import ry.rudenko.englishlessonswebapp.model.entity.ThemeEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 import ry.rudenko.englishlessonswebapp.repository.LessonRepository;
 import ry.rudenko.englishlessonswebapp.repository.ThemeRepository;
-import ry.rudenko.englishlessonswebapp.repository.UserRepository;
+import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -32,7 +32,7 @@ public class LessonService {
 
    LessonDtoFactory lessonDtoFactory;
 
-   UserRepository userRepository;
+   UserEntityRepository userRepository;
 
    UserDtoFactory userDtoFactory;
 
