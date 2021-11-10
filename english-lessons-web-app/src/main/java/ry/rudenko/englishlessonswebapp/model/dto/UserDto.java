@@ -26,18 +26,18 @@ public class UserDto {
 
 
   @NonNull
-  String firstName;
+  String name;
 
   String middleName;
 
   @NonNull
   String lastName;
 
-  @NonNull
-  String login;
+//  @NonNull
+//  String email;
 
-  @NonNull
-  String password;
+//  @NonNull
+//  String password;
 
   @NonNull
   Instant birthday;

@@ -1,6 +1,8 @@
 package ry.rudenko.englishlessonswebapp.model.entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +16,10 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import java.time.Instant;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import ry.rudenko.englishlessonswebapp.auth.bean.RegistrationRequest;
 import ry.rudenko.englishlessonswebapp.enums.UserRole;
 import ry.rudenko.englishlessonswebapp.model.dto.LessonDto;
 import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
@@ -25,79 +31,107 @@ import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "users_entity")
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id")
   Long id;
 
-  @NonNull
   @Column(unique = true)
   String login;
 
-  @NonNull
+  @Column(name = "password")
   String password;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   List<TodoEntity> todos;
 
-  @NonNull
-  String firstName;
+  @Column(name = "name")
+  String name;
 
-  @NonNull
   String lastName;
 
   String middleName;
 
-  @NonNull
+  @Column(name = "email")
+   String email;
+
   Instant birthday;
 
-  @NonNull
+  @Column(name = "role")
   @Enumerated(EnumType.STRING)
-  UserRole role;
+  UserRole role = UserRole.USER;
 
 
   @ManyToOne
   @JoinColumn(name = "lesson_id")
   private LessonEntity lessons;
 
-//  public List<TodoDto> getTodoList() {
-//    List<TodoDto> todoDtos = new ArrayList<>();
-//    if(todos != null) {
-//      for (TodoEntity todo : todos) {
-//        todoDtos.add(TodoDto.toDto(todo));
-//      }
-//    }
-//    return todoDtos;
-//  }
-//  public List<LessonDto> getLessonList() {
-//    List<LessonDto> lessonDtos = new ArrayList<>();
-//    if (lessons != null) {
-//      for (LessonEntity lessonEntity : lessons) {
-//        lessonDtos.add(LessonDto.toDto(lessonEntity));
-//      }
-//    }
-//    return lessonDtos;
-//  }
+  @Column(name = "locked")
+  private boolean locked;
+
+  @Column(name = "enabled")
+  private boolean enabled;
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
+    return Collections.singletonList(authority);
+  }
+  @Override
+  public String getPassword() {
+    return password;
+  }
+
+  @Override
+  public String getUsername() {
+    return email;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return !locked;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return enabled;
+  }
+
 
   public static UserEntity makeDefault(
       String firstName,
       String middleName,
       String lastName,
-      String login,
-      String password,
+//      String email,
+//      String password,
       Instant birthday,
       UserRole role) {
     return builder()
-        .firstName(firstName)
+        .name(firstName)
         .middleName(middleName)
         .lastName(lastName)
-        .login(login)
-        .password(password)
+//        .login(email)
+//        .password(password)
         .birthday(birthday)
         .role(role)
         .build();
+  }
+  public UserEntity(RegistrationRequest registrationRequest) {
+    this.name = registrationRequest.getName();
+    this.email = registrationRequest.getEmail();
+    this.password = registrationRequest.getPassword();
   }
 }
 

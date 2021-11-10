@@ -13,11 +13,11 @@ public class UserDtoFactory {
   public UserDto createUserDto(UserEntity entity) {
     return UserDto.builder()
 
-        .firstName(entity.getFirstName())
+        .name(entity.getName())
         .middleName(entity.getMiddleName())
         .lastName(entity.getLastName())
-        .login(entity.getLogin())
-        .password(entity.getPassword())
+//        .login(entity.getLogin())
+//        .password(entity.getPassword())
         .birthday(entity.getBirthday())
         .role(entity.getRole())
         .build();

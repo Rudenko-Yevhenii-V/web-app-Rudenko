@@ -37,7 +37,7 @@ public class LessonController {
       @RequestBody PrefixDto prefix) {
     return ResponseEntity.ok(lessonService.createLessonDtoList(themeId, prefix));
   }
-  @GetMapping(Routes.ADD_TO_USER_LESSON)
+  @PostMapping(Routes.ADD_TO_USER_LESSON)
   public ResponseEntity<UserDto> lessonToUser(
       @PathVariable Long lessonId, @PathVariable Long user_id) {
     return ResponseEntity.ok(lessonService.lessonToUser(lessonId, user_id));

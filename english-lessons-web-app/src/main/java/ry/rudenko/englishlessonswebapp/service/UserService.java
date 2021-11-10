@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.factory.UserDtoFactory;
@@ -39,18 +40,26 @@ public class UserService {
   }
 
   public UserDto createUserDto(UserDto userDto) {
+//    rttr
+    UserEntity appUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-    UserEntity user = userRepository.saveAndFlush(
-        UserEntity.makeDefault(
-            userDto.getFirstName(),
-            userDto.getMiddleName(),
-            userDto.getLastName(),
-            userDto.getLogin(),
-            userDto.getPassword(),
-            userDto.getBirthday(),
-            userDto.getRole()
-        )
-    );
+    appUser.setName(userDto.getName());
+    appUser.setMiddleName(userDto.getMiddleName());
+    appUser.setLastName(userDto.getLastName());
+    appUser.setBirthday(userDto.getBirthday());
+    appUser.setRole(userDto.getRole());
+    UserEntity user = userRepository.saveAndFlush(appUser);
+//    UserEntity user = userRepository.saveAndFlush(
+//        UserEntity.makeDefault(
+//            userDto.getName(),
+//            userDto.getMiddleName(),
+//            userDto.getLastName(),
+////            userDto.getLogin(),
+////            userDto.getPassword(),
+//            userDto.getBirthday(),
+//            userDto.getRole()
+//        )
+//    );
     return userDtoFactory.createUserDto(user);
   }
 

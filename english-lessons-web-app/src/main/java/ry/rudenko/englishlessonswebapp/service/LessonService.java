@@ -47,10 +47,6 @@ public class LessonService {
   }
 
   public LessonDto createLessonDto(Long themeId, String lessonsName) {
-    System.out.println(themeId);
-    System.out.println(lessonsName);
-    System.out.println("lessonRepository = " + lessonRepository);
-    System.out.println("themeRepository = " + themeRepository);
     ThemeEntity theme = getThemeOrThrowNotFound(themeId);
     LessonEntity lesson = lessonRepository
         .saveAndFlush(LessonEntity.makeDefault(lessonsName.toUpperCase(), theme));
