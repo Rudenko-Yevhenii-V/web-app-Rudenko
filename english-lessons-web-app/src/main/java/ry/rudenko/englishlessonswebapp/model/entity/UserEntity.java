@@ -1,5 +1,6 @@
 package ry.rudenko.englishlessonswebapp.model.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,11 +32,13 @@ import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "users_entity")
-public class UserEntity implements UserDetails {
+public class UserEntity implements UserDetails, Serializable {
+
+//todo UUID need add!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "user_id")
+  @Column(name = "user_id", nullable = false, updatable = false)
   Long id;
 
   @Column(unique = true)

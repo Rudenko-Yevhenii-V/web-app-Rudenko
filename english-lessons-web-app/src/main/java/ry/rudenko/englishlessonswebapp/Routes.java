@@ -23,7 +23,7 @@ public final class Routes {
   public static final String CREATE_THEME = "/themes/{themeName}";
   public static final String DELETE_THEME = "/themes/{themeId}";
 
-  public static final String FETCH_USERS = "/users";
+  public static final String FETCH_USERS = "users/all";
   public static final String FETCH_USERS_BY_THEME = "/{lessonId}/users";
   public static final String CREATE_USER = "/users/create";
   public static final String DELETE_USER = "/users/{userId}";

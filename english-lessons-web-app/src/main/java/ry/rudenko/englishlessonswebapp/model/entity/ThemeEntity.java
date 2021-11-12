@@ -1,6 +1,7 @@
 package ry.rudenko.englishlessonswebapp.model.entity;
 
 
+import java.io.Serializable;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "theme")
-public class ThemeEntity {
+public class ThemeEntity   implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)

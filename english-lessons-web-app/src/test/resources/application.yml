@@ -22,3 +22,11 @@ spring:
   flyway:
    enabled: false
 
+auth:
+  cookie:
+    auth: AUTH-TOKEN
+    refresh: REFRESH-TOKEN
+    secret: ljhdsl;ghiopbmispvgspmvgjca;qdfs
+    expiration-auth: 600000000
+    expiration-refresh: 31536000
+    path: /

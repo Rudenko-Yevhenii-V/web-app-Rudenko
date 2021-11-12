@@ -1,5 +1,6 @@
 package ry.rudenko.englishlessonswebapp.model.entity;
 
+import java.io.Serializable;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "token")
-public class TokenEntity {
+public class TokenEntity   implements Serializable {
 
   private static final int EXPIRED_SECONDS = 60 * 60; // One hour expired
 

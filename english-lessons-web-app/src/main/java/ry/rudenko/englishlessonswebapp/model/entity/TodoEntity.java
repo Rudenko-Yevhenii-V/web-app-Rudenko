@@ -1,6 +1,7 @@
 package ry.rudenko.englishlessonswebapp.model.entity;
 
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "todo")
-public class TodoEntity {
+public class TodoEntity   implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

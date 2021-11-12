@@ -44,8 +44,6 @@ public class UserDto {
 
   @NonNull
   UserRole role;
-
-
 }
 
 

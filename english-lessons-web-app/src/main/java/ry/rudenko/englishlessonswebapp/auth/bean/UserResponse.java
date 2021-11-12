@@ -1,5 +1,6 @@
 package ry.rudenko.englishlessonswebapp.auth.bean;
 
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
@@ -7,7 +8,7 @@ import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 
 @Getter
 @Setter
-public class UserResponse extends BaseResponse {
+public class UserResponse extends BaseResponse   implements Serializable {
     private String name;
     private String email;
     private boolean enabled;
