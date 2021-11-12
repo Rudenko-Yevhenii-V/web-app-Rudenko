@@ -52,6 +52,7 @@ class ThemeControllerTest {
         .andReturn();
     ThemeDto dto = objectMapper.readValue(result.getResponse().getContentAsString(),
         ThemeDto.class);
+
     assert (dto.getName().equals(themeName));
     log.info(result.getResponse().toString());
   }

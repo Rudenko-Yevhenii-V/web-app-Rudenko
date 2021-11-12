@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5400/db_final
+    url: jdbc:postgresql://${SPRING_DATASOURCE_URL:localhost}:5432/shar_db
     driver-class-name: org.postgresql.Driver
     username: rttr
     password: root

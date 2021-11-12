@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,10 +48,10 @@ public class UserController {
     return ResponseEntity.ok(userService.createUserDtoListServ(filterLastName));
   }
 
-  @PostMapping(Routes.CREATE_USER)
-  public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+  @PutMapping(Routes.UPDATE_USER)
+  public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
 
-    return ResponseEntity.ok(userService.createUserDto(userDto));
+    return ResponseEntity.ok(userService.updateUserDto(userDto));
   }
 
   @DeleteMapping(Routes.DELETE_USER)

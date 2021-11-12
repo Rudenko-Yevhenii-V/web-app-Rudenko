@@ -25,7 +25,7 @@ public final class Routes {
 
   public static final String FETCH_USERS = "users/all";
   public static final String FETCH_USERS_BY_THEME = "/{lessonId}/users";
-  public static final String CREATE_USER = "/users/create";
+  public static final String UPDATE_USER = "/users/update";
   public static final String DELETE_USER = "/users/{userId}";
   public static final String GET_USER_ID_BY_LOGIN_AND_PASSWORD = "/users/get_user_id";
 }

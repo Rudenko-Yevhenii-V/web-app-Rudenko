@@ -39,27 +39,14 @@ public class UserService {
     return userDtoFactory.createUserDtoList(users);
   }
 
-  public UserDto createUserDto(UserDto userDto) {
-//    rttr
+  public UserDto updateUserDto(UserDto userDto) {
     UserEntity appUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
     appUser.setName(userDto.getName());
     appUser.setMiddleName(userDto.getMiddleName());
     appUser.setLastName(userDto.getLastName());
     appUser.setBirthday(userDto.getBirthday());
     appUser.setRole(userDto.getRole());
     UserEntity user = userRepository.saveAndFlush(appUser);
-//    UserEntity user = userRepository.saveAndFlush(
-//        UserEntity.makeDefault(
-//            userDto.getName(),
-//            userDto.getMiddleName(),
-//            userDto.getLastName(),
-////            userDto.getLogin(),
-////            userDto.getPassword(),
-//            userDto.getBirthday(),
-//            userDto.getRole()
-//        )
-//    );
     return userDtoFactory.createUserDto(user);
   }
 
