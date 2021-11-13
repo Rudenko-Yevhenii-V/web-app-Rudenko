@@ -2,21 +2,37 @@ version: '3'
 
 services:
 
-  file-sharing-service:
-    image: file-sharing-service:0.0.1-SNAPSHOT
+  web-app-service:
+    image: web-app-service:0.0.1-SNAPSHOT
     build:
       context: .
-    container_name: file_sharing_service
+      dockerfile: Dockerfile
+    container_name: web-app-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/shar_db
     depends_on:
-       - db
+      - db
     ports:
-       - "8088:8088"
+      - "8088:8088"
+
+  dictionary-service:
+    image: dictionary-service:0.0.1-SNAPSHOT
+    build:
+      context: ../english-lessons-dictionary/
+      dockerfile: Dockerfile
+    container_name: dictionary-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/shar_db
+      SPRING_DOCKER_URL: web-app-service
+    depends_on:
+      - db
+      - web-app-service
+    ports:
+      - "8087:8087"
 
   db:
     image: postgres:12
-    container_name: file_sharing_db
+    container_name: web_app_db
     restart: always
     environment:
       POSTGRES_PASSWORD: root

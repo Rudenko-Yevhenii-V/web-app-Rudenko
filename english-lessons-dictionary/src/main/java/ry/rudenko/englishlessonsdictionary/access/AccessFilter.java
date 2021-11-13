@@ -14,8 +14,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import ry.rudenko.englishlessonsdictionary.bean.CurrentUser;
@@ -24,12 +24,20 @@ import ry.rudenko.englishlessonsdictionary.provider.JwtSettingsProvider;
 @Order(1)
 @Component
 @Slf4j
-@AllArgsConstructor
 public class AccessFilter implements Filter {
 
     private final JwtSettingsProvider jwtSettingsProvider;
     private final CurrentUserProvider currentUserProvider;
     private final Gson gson = new Gson();
+    @Value("${my.path.yml.urlname}")
+    private String urlName;
+
+    public AccessFilter(
+        JwtSettingsProvider jwtSettingsProvider,
+        CurrentUserProvider currentUserProvider) {
+        this.jwtSettingsProvider = jwtSettingsProvider;
+        this.currentUserProvider = currentUserProvider;
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -55,8 +63,8 @@ public class AccessFilter implements Filter {
 
     private CurrentUser fetchRemoteUser(HttpServletRequest httpServletRequest) {
         try {
-            URL url = new URL("http://localhost:8088/api/v1/auth/current");
 
+            URL url = new URL(urlName);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(2000);
             connection.setReadTimeout(1000);

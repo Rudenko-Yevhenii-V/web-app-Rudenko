@@ -5,3 +5,8 @@ auth:
   cookie:
     auth: AUTH-TOKEN
     refresh: REFRESH-TOKEN
+
+my:
+  path:
+    yml:
+      urlname: http://${SPRING_DOCKER_URL:localhost}:8088/api/v1/auth/current
