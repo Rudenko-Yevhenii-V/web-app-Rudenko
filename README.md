@@ -2,13 +2,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/download.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">english-lessons-web-app</h3>
 
   <p align="center">
-    For company  <img src="images/logo.png" alt="Logo" width="20" height="20"> project!
+    For nix solutions project!
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
