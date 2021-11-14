@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
     container_name: dictionary-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db2:5400/shar_db2
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db2:5432/shar_db2
       SPRING_DOCKER_URL: web-app-service
     depends_on:
       - db2
