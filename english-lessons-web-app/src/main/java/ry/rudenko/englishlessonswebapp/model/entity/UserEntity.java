@@ -57,7 +57,7 @@ public class UserEntity implements UserDetails, Serializable {
 
   String middleName;
 
-  @Column(name = "email")
+  @Column(name = "email", unique = true)
    String email;
 
   Instant birthday;

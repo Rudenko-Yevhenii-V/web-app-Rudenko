@@ -1,4 +1,4 @@
-package ry.rudenko.englishlessonsdictionary.bean;
+package ry.rudenko.englishlessonsdictionary.entity.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -26,8 +26,7 @@ public class TodoService {
     TodoEntity todo = TodoEntity.makeDefault(
         tododto.getTitle(),
         tododto.getCompleted(),
-        tododto.getDescription(),
-        user
+        tododto.getDescription()
     );
     return TodoDto.toDto(todoRepo.save(todo));
   }

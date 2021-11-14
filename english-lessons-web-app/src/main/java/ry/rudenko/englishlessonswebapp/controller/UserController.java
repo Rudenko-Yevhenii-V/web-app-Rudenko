@@ -50,7 +50,6 @@ public class UserController {
 
   @PutMapping(Routes.UPDATE_USER)
   public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
-
     return ResponseEntity.ok(userService.updateUserDto(userDto));
   }
 

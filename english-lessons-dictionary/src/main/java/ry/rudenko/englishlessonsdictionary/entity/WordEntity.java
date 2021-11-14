@@ -1,50 +1,50 @@
-package ry.rudenko.englishlessonswebapp.model.entity;
+package ry.rudenko.englishlessonsdictionary.entity;
 
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-@Data
+
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "todo")
-public class TodoEntity   implements Serializable {
+@Table(name = "words")
+public class WordEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   Long id;
-   String title;
-   Boolean completed;
-   String description;
+  @Column(name = "word_id")
+  Long id;
+  String word;
+  String description;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-   UserEntity user;
+@ManyToMany(mappedBy = "wordEntities")
+private List<UserEntity> userEntities = new ArrayList<>();
 
-  public static TodoEntity makeDefault(
-      String title,
-      Boolean completed,
+  public static WordEntity makeDefault(
+      String word,
       String description) {
     return builder()
-        .title(title)
-        .completed(completed)
+        .word(word)
         .description(description)
         .build();
   }
-
 }

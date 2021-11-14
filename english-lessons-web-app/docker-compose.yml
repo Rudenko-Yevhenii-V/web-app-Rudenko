@@ -22,10 +22,10 @@ services:
       dockerfile: Dockerfile
     container_name: dictionary-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/shar_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db2:5400/shar_db2
       SPRING_DOCKER_URL: web-app-service
     depends_on:
-      - db
+      - db2
       - web-app-service
     ports:
       - "8087:8087"
@@ -40,6 +40,17 @@ services:
       POSTGRES_DB: shar_db
     ports:
       - "5432:5432"
+
+  db2:
+    image: postgres:12
+    container_name: web_app_db2
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: rttr
+      POSTGRES_DB: shar_db2
+    ports:
+      - "5400:5432"
 
 volumes:
   db-data:

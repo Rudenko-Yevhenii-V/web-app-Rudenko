@@ -3,7 +3,7 @@ package ry.rudenko.englishlessonsdictionary.access;
 import javax.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ry.rudenko.englishlessonsdictionary.bean.CurrentUser;
+import ry.rudenko.englishlessonsdictionary.entity.dto.CurrentUser;
 
 @Component
 @AllArgsConstructor
