@@ -18,6 +18,9 @@
 		<springdoc-openapi.version>1.5.12</springdoc-openapi.version>
 		<hibernate.version>5.4.32.Final</hibernate.version>
 		<spring-ver>2.5.5</spring-ver>
+		<flyway.user>rttr</flyway.user>
+		<flyway.password>root</flyway.password>
+		<flyway.schemas>shar_db2</flyway.schemas>
 	</properties>
 	<dependencies>
 
@@ -76,6 +79,12 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc-openapi.version}</version>
 		</dependency>
+		<!--		migration -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>8.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -91,6 +100,18 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>4.0.3</version>
+				<configuration>
+					<user>databaseUser</user>
+					<password>databasePassword</password>
+					<schemas>
+						<schema>schemaName</schema>
+					</schemas>
 				</configuration>
 			</plugin>
 		</plugins>

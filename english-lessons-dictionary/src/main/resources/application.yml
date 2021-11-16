@@ -17,11 +17,11 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: rttr
     password: root
-  jpa:
-    generate-ddl: true
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+#  jpa:
+#    generate-ddl: true
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
 
 logging:
   file:
