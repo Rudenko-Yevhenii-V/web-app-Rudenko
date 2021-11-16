@@ -9,7 +9,9 @@ import ry.rudenko.englishlessonsdictionary.entity.WordEntity;
 public interface WordEntityRepository extends JpaRepository<WordEntity, Long> {
 
    WordEntity findWordEntityById(Long id);
+   WordEntity findWordEntityByWord(String word);
 
    List<WordEntity> findWordEntitiesByUserEntities(UserEntity userEntity);
+
 }
 

@@ -7,16 +7,18 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ry.rudenko.englishlessonsdictionary.access.AccessFilter;
 import ry.rudenko.englishlessonsdictionary.entity.dto.CurrentUser;
 import ry.rudenko.englishlessonsdictionary.entity.WordEntity;
 import ry.rudenko.englishlessonsdictionary.entity.dto.WordDto;
 import ry.rudenko.englishlessonsdictionary.exception.NotFoundException;
+import ry.rudenko.englishlessonsdictionary.exception.UnauthorizedException;
 import ry.rudenko.englishlessonsdictionary.repository.WordEntityRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -31,12 +33,27 @@ public class WordController {
   @PostMapping("/words")
   public ResponseEntity<WordEntity> AddWord(@RequestBody WordDto wordDto) {
     final CurrentUser currentUser = accessFilter.getCurrentUser();
-    if (currentUser == null){
-      throw new NotFoundException("current user not found! Or access is Forbidden!");
+    if (currentUser.getEmail() == null) {
+      throw new UnauthorizedException("current user not found! Or access is Forbidden!");
     }
     final WordEntity wordEntity = WordEntity.makeDefault(wordDto.getWord(),
         wordDto.getDescription());
-    return ResponseEntity.ok(wordEntityRepository.save(wordEntity));
+    WordEntity wordEntityByWord = wordEntityRepository.findWordEntityByWord(wordEntity.getWord());
+    return ResponseEntity.ok(Objects.requireNonNullElseGet(wordEntityByWord, () -> wordEntityRepository.save(wordEntity)));
+  }
+
+  @GetMapping("/words")
+  public ResponseEntity<?> findAllWordsInDictionary() {
+    final CurrentUser currentUser = accessFilter.getCurrentUser();
+    if (currentUser.getEmail() == null) {
+      throw new UnauthorizedException("current user not found! Or access is Forbidden!");
+    }
+    final List<WordEntity> allByUserEntities = wordEntityRepository.findAll();
+    List<WordDto> wordDtos = new ArrayList<>();
+    allByUserEntities.stream().forEach(wordEntity -> wordDtos.add(new WordDto(
+            wordEntity.getId(), wordEntity.getWord(), wordEntity.getDescription()
+    )));
+    return ResponseEntity.ok(wordDtos);
   }
 
 }

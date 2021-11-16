@@ -52,25 +52,31 @@ public class UserController {
     final UserEntity userEntityByEmail = userEntityRepository.findUserEntityByEmail(
         currentUser.getEmail());
     userEntity = Objects.requireNonNullElseGet(userEntityByEmail,
-        () -> new UserEntity(currentUser.getName(),
-            currentUser.getEmail()));
+        () ->
+           userEntityRepository.save(new UserEntity(currentUser.getName(),
+                  currentUser.getEmail()))
+        );
     for (Long wordId : wordsId) {
       userEntity.addWord(wordEntityRepository.findWordEntityById(wordId));
     }
-    final UserEntity save = userEntityRepository.save(userEntity);
-    return ResponseEntity.ok(userDtoFactory.createUserDto(save));
+    return ResponseEntity.ok(userDtoFactory.createUserDto(userEntity));
   }
 
   @GetMapping("/users/words")
   public ResponseEntity<?> findAllWordsByUserEntities() {
     final CurrentUser currentUser = accessFilter.getCurrentUser();
-    if (currentUser == null) {
-      throw new NotFoundException("current user not found! Or access is Forbidden!");
+    if (currentUser.getEmail() == null) {
+      throw new UnauthorizedException("current user not found! Or access is Forbidden!");
+    }
+    UserEntity userEntityByEmail = userEntityRepository.findUserEntityByEmail(currentUser.getEmail());
+    if(userEntityByEmail == null){
+      return ResponseEntity.ok("First add words!");
     }
     final List<WordEntity> allByUserEntities = wordEntityRepository.findWordEntitiesByUserEntities(
-        userEntityRepository.findUserEntityByEmail(currentUser.getEmail()));
+            userEntityByEmail);
     List<WordDto> wordDtoList = new ArrayList<>();
     allByUserEntities.forEach(wordEntity -> wordDtoList.add(new WordDto(
+            wordEntity.getId(),
         wordEntity.getWord(),
         wordEntity.getDescription()
     )));
