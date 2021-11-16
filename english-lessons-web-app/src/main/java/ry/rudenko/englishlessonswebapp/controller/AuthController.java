@@ -1,5 +1,6 @@
 package ry.rudenko.englishlessonswebapp.controller;
 
+import ry.rudenko.englishlessonswebapp.Routes;
 import ry.rudenko.englishlessonswebapp.auth.access.JwtTokenProvider;
 import ry.rudenko.englishlessonswebapp.auth.bean.ErrorResponse;
 import ry.rudenko.englishlessonswebapp.auth.bean.LoginRequest;
@@ -23,7 +24,7 @@ import ry.rudenko.englishlessonswebapp.service.RegistrationService;
 
 @RestController
 @ResponseBody
-@RequestMapping(path = "api/v1/auth")
+@RequestMapping(path = Routes.API_ROOT +"/auth")
 @AllArgsConstructor
 @Slf4j
 public class AuthController {
@@ -31,7 +32,7 @@ public class AuthController {
     private final LoginService loginService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping(path = "registration")
+    @PostMapping(Routes.USER_REG)
     public ResponseEntity<?> registration(@RequestBody RegistrationRequest registrationRequest, HttpServletResponse response) {
         try {
             UserEntity appUser = registrationService.register(registrationRequest);
@@ -44,7 +45,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping(path = "login")
+    @PostMapping(Routes.USER_LOGIN)
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         try {
 
@@ -60,7 +61,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping(path = "current")
+    @GetMapping(Routes.USER_CURRENT)
     public ResponseEntity<?> current() {
         try {
             UserEntity appUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -70,13 +71,8 @@ public class AuthController {
         }
         return buildUserResponse(new UserEntity());
     }
-    @GetMapping(path = "test")
-    public ResponseEntity<?> test() {
-        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.ok("Test access");
-    }
 
-    @GetMapping(path = "logout")
+    @GetMapping(Routes.USER_LOGOUT)
     public ResponseEntity<?> logout(HttpServletResponse httpServletResponse) {
         clearAuthAndRefreshTokens(httpServletResponse);
         SecurityContextHolder.clearContext();

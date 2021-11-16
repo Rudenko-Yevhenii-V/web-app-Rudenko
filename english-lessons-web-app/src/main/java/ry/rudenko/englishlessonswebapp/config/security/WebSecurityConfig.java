@@ -17,49 +17,48 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ry.rudenko.englishlessonswebapp.auth.access.JwtTokenConfig;
 
 @Configuration
-@EnableWebSecurity(debug = false)
+@EnableWebSecurity()
 @AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final JwtTokenConfig jwtTokenConfig;
+    private final JwtTokenConfig jwtTokenConfig;
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-        .cors(Customizer.withDefaults())
-        .csrf().disable()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .cors(Customizer.withDefaults())
+                .csrf().disable()
 //        .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-        .authorizeRequests()
-        .antMatchers("/api/v1/auth/login", "/api/v1/users/all",
-            "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
-            "/api/v1/auth/registration", "/api/v1/auth/current").permitAll()
-        .anyRequest()
-        .authenticated().and()
-        // allow cross-origin requests for all endpoints
-        .cors().configurationSource(corsConfigurationSource())
-        .and()
-        .apply(jwtTokenConfig);
-  }
+                .authorizeRequests()
+                .antMatchers("/api/v1/auth/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
+                        "/api/v1/auth/registration", "/api/v1/auth/current").permitAll()
+                .anyRequest()
+                .authenticated().and()
+                // allow cross-origin requests for all endpoints
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
+                .apply(jwtTokenConfig);
+    }
 
-  private CorsConfigurationSource corsConfigurationSource() {
-    var source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-    return source;
-  }
+    private CorsConfigurationSource corsConfigurationSource() {
+        var source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
+    }
 
-  @Bean
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-  @Bean
-  public WebMvcConfigurer corsConfig() {
-    return new WebMvcConfigurer() {
-      @Override
-      public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000", "http://localhost:8087");
-      }
-    };
-  }
+    @Bean
+    public WebMvcConfigurer corsConfig() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000", "http://localhost:8087");
+            }
+        };
+    }
 }

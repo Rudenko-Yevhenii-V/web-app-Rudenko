@@ -11,9 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @ComponentScan("ry.rudenko.englishlessonswebapp")
 public class ClientWebConfigJava implements WebMvcConfigurer {
-  @Bean
-  public MethodValidationPostProcessor methodValidationPostProcessor() {
-    return new MethodValidationPostProcessor();
-  }
+    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor() {
+        return new MethodValidationPostProcessor();
+    }
 
 }
