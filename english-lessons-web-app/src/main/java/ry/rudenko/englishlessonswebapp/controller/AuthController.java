@@ -52,7 +52,6 @@ public class AuthController {
             UserEntity appUser = loginService.login(loginRequest.getEmail(), loginRequest.getPassword());
             final String token = setAuthToken(appUser, response);
             setRefreshToken(appUser, response);
-//            return buildUserResponse(appUser);
             return ResponseEntity.ok(token);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());

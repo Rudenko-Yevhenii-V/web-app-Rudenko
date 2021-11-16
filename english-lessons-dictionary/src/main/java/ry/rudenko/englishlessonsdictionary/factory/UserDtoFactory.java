@@ -16,11 +16,4 @@ public class UserDtoFactory {
         .email(entity.getEmail())
         .build();
   }
-
-  public List<UserDto> createUserDtoList(List<UserEntity> entities) {
-    return entities
-        .stream()
-        .map(this::createUserDto)
-        .collect(Collectors.toList());
-  }
 }

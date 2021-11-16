@@ -16,8 +16,6 @@ public class UserDtoFactory {
         .name(entity.getName())
         .middleName(entity.getMiddleName())
         .lastName(entity.getLastName())
-//        .login(entity.getLogin())
-//        .password(entity.getPassword())
         .birthday(entity.getBirthday())
         .role(entity.getRole())
         .build();

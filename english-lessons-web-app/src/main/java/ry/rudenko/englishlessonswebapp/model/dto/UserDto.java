@@ -1,20 +1,11 @@
 package ry.rudenko.englishlessonswebapp.model.dto;
 
 
-import java.time.Instant;
-import java.util.List;
-import java.util.stream.Collectors;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ry.rudenko.englishlessonswebapp.enums.UserRole;
-import ry.rudenko.englishlessonswebapp.model.entity.LessonEntity;
-import ry.rudenko.englishlessonswebapp.model.entity.TodoEntity;
-import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
+
+import java.time.Instant;
 
 @Data
 @Builder
@@ -23,8 +14,6 @@ import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDto {
 
-
-
   @NonNull
   String name;
 
@@ -32,12 +21,6 @@ public class UserDto {
 
   @NonNull
   String lastName;
-
-//  @NonNull
-//  String email;
-
-//  @NonNull
-//  String password;
 
   @NonNull
   Instant birthday;

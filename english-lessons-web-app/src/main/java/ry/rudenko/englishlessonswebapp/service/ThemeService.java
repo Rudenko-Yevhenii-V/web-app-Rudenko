@@ -1,10 +1,8 @@
 package ry.rudenko.englishlessonswebapp.service;
 
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ry.rudenko.englishlessonswebapp.exception.BadRequestException;
 import ry.rudenko.englishlessonswebapp.factory.ThemeDtoFactory;
@@ -12,6 +10,8 @@ import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
 import ry.rudenko.englishlessonswebapp.model.dto.ThemeDto;
 import ry.rudenko.englishlessonswebapp.model.entity.ThemeEntity;
 import ry.rudenko.englishlessonswebapp.repository.ThemeRepository;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)

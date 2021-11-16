@@ -1,27 +1,19 @@
 package ry.rudenko.englishlessonswebapp.controller;
 
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import java.util.List;
-import javax.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ry.rudenko.englishlessonswebapp.Routes;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
 import ry.rudenko.englishlessonswebapp.model.dto.LessonDto;
 import ry.rudenko.englishlessonswebapp.model.dto.PrefixDto;
 import ry.rudenko.englishlessonswebapp.model.dto.UserDto;
 import ry.rudenko.englishlessonswebapp.service.LessonService;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)

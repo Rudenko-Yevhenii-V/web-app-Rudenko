@@ -1,16 +1,10 @@
 package ry.rudenko.englishlessonswebapp.model.dto;
 
-import javax.persistence.Column;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ry.rudenko.englishlessonswebapp.model.entity.LessonEntity;
-import ry.rudenko.englishlessonswebapp.model.entity.ThemeEntity;
-import ry.rudenko.englishlessonswebapp.model.entity.TodoEntity;
+
+import javax.persistence.Column;
 
 @Data
 @Builder
@@ -38,5 +32,4 @@ public class LessonDto {
         .build());
     return model;
   }
-
 }

@@ -13,7 +13,7 @@ public class JwtTokenConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
     private final JwtTokenFilter jwtTokenFilter;
 
     @Override
-    public void configure(HttpSecurity builder) throws Exception {
+    public void configure(HttpSecurity builder) {
         builder.addFilterAfter(jwtTokenFilter, SecurityContextHolderAwareRequestFilter.class);
     }
 }

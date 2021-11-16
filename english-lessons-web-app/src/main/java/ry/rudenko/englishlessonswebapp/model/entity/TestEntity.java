@@ -8,7 +8,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,9 +24,6 @@ public class TestEntity   implements Serializable {
 
   @Column(length = 10485760)
   String name;
-
-//  @Builder.Default
-//  Boolean isStarted = false;
 
   @Builder.Default
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

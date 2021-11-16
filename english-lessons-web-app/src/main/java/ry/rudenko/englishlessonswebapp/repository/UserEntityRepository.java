@@ -3,13 +3,12 @@ package ry.rudenko.englishlessonswebapp.repository;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 
 import java.util.List;
 import java.util.Optional;
-import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
-  UserEntity findByName(String name);
 
   @Query("SELECT u FROM UserEntity u " +
       "WHERE :isFiltered = FALSE " +
@@ -27,7 +26,8 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
   List<UserEntity> findAllByFilterAndLessonEntityId(boolean isFiltered, String filter, Long lessonEntityId);
 
   @Query("SELECT u FROM UserEntity u WHERE u.id =:userId")
-  Optional<UserEntity> findById(Long userId);
+  @NonNull
+  Optional<UserEntity> findById(@NonNull Long userId);
 
   Optional<UserEntity> findTopByLoginAndPassword(@NonNull String login, @NonNull String password);
 }

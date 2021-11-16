@@ -23,8 +23,6 @@ public class UserService {
 
   UserEntityRepository userRepository;
   UserDtoFactory userDtoFactory;
-//  private static final int PASSWORD_LENGTH = 10;
-
 
   public List<UserDto> createUserDtoList(String filterLastName, Long lessonId) {
     boolean isFiltered = !filterLastName.trim().isEmpty();
@@ -49,16 +47,6 @@ public class UserService {
     UserEntity user = userRepository.saveAndFlush(appUser);
     return userDtoFactory.createUserDto(user);
   }
-
-//  private String makeLogin(String firstName, String lastName) {
-//    String firstNameTransliterated = (firstName.toLowerCase());
-//    String lastNameTransliterated = (lastName.toLowerCase());
-//    return String.format("%s.%s", firstNameTransliterated.charAt(0), lastNameTransliterated);
-//  }
-
-//  private String makePassword() {
-//    return UUID.randomUUID().toString().replaceAll("-", "").substring(0, PASSWORD_LENGTH);
-//  }
 
   public AckDto deleteUser(Long userId) {
     if (userRepository.existsById(userId)) {

@@ -33,8 +33,6 @@ public class UserController {
 
   UserService userService;
 
-
-
   @GetMapping(Routes.FETCH_USERS_BY_THEME)
   public ResponseEntity<List<UserDto>> fetchUsersByLesson(
       @RequestParam(defaultValue = "") String filterLastName,
