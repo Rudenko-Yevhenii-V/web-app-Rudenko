@@ -8,6 +8,8 @@ import ry.rudenko.englishlessonswebapp.auth.bean.RegistrationRequest;
 import ry.rudenko.englishlessonswebapp.auth.bean.UserResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping(Routes.USER_REG)
-    public ResponseEntity<?> registration(@RequestBody RegistrationRequest registrationRequest, HttpServletResponse response) {
+    public ResponseEntity<?> registration(@Valid @RequestBody  RegistrationRequest registrationRequest, HttpServletResponse response) {
         try {
             UserEntity appUser = registrationService.register(registrationRequest);
             setAuthToken(appUser, response);
