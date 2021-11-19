@@ -32,14 +32,14 @@ public class TestController {
     return ResponseEntity.ok(testService.createTestDto(testId));
   }
 
-  @PostMapping(Routes.CREATE_OR_UPDATE_TEST)
+  @PostMapping("/admin" + Routes.CREATE_OR_UPDATE_TEST)
   public ResponseEntity<TestDto> createOrUpdateTest(@RequestParam String falseAnswers,
       @RequestParam Integer answerOrder,
       @RequestBody TestDto test) {
     return ResponseEntity.ok(testService.createTestDtoServ(falseAnswers, answerOrder, test));
   }
 
-  @DeleteMapping(Routes.DELETE_TEST)
+  @DeleteMapping("/admin" + Routes.DELETE_TEST)
   public ResponseEntity<AckDto> deleteTest(
       @PathVariable Long testId) {
     return ResponseEntity.ok(testService.deleteTest(testId));

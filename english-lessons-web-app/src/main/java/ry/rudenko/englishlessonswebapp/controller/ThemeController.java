@@ -39,7 +39,7 @@ public class ThemeController {
     }
   }
 
-  @PostMapping(Routes.CREATE_THEME)
+  @PostMapping("/admin" + Routes.CREATE_THEME)
   public ResponseEntity<ThemeDto> createTheme(@PathVariable String themeName) {
     try {
       return ResponseEntity.ok(themeService.createThemeDto(themeName));
@@ -48,7 +48,7 @@ public class ThemeController {
     }
   }
 
-  @DeleteMapping(Routes.DELETE_THEME)
+  @DeleteMapping("/admin" + Routes.DELETE_THEME)
   public ResponseEntity<AckDto> deleteTheme(@PathVariable Long themeId) {
     try {
       return ResponseEntity.ok(themeService.deleteTheme(themeId));

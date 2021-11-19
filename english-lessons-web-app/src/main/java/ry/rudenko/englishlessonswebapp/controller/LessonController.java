@@ -34,14 +34,14 @@ public class LessonController {
       @PathVariable Long lessonId, @PathVariable Long user_id) {
     return ResponseEntity.ok(lessonService.lessonToUser(lessonId, user_id));
   }
-  @PostMapping(Routes.CREATE_LESSONS)
+  @PostMapping("/admin" + Routes.CREATE_LESSONS)
   public ResponseEntity<LessonDto> createLesson(@PathVariable Long themeId,
       @PathVariable String lessonsText) {
 
     return ResponseEntity.ok(lessonService.createLessonDto(themeId, lessonsText));
   }
 
-  @DeleteMapping(Routes.DELETE_LESSON)
+  @DeleteMapping("/admin" + Routes.DELETE_LESSON)
   public ResponseEntity<AckDto> deleteLesson(@PathVariable Long themeId,
       @PathVariable Long lessonId) {
     return ResponseEntity.ok(lessonService.deleteLesson(themeId, lessonId));

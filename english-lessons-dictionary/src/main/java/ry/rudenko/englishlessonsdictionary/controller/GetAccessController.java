@@ -22,7 +22,7 @@ public class GetAccessController {
 
 
 
-  @GetMapping(path = "accessUser")
+  @GetMapping(path = "access_user")
   public ResponseEntity<?> getAccessUser() {
      CurrentUser currentUser = accessFilter.getCurrentUser();
     if (currentUser.getEmail() == null) {
