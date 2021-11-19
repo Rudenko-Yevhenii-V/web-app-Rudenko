@@ -1,3 +1,10 @@
 body{
-  margin: 20%;
+  margin: 2%;
+
+}
+#out{
+  color: brown;
+}
+.input_area{
+  font-size: 75%;
 }

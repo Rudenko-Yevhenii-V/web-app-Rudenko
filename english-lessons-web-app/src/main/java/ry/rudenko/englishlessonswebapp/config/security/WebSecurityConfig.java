@@ -4,16 +4,20 @@ package ry.rudenko.englishlessonswebapp.config.security;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import ry.rudenko.englishlessonswebapp.Routes;
 import ry.rudenko.englishlessonswebapp.auth.access.JwtTokenConfig;
 
 @Configuration
@@ -31,10 +35,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
                         "/api/v1/auth/registration", "/api/v1/auth/current").permitAll()
+                .antMatchers(HttpMethod.PUT, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated().and()
                 // allow cross-origin requests for all endpoints
                 .cors().configurationSource(corsConfigurationSource())
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher(Routes.API_ROOT + Routes.USER_LOGOUT))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
                 .and()
                 .apply(jwtTokenConfig);
     }

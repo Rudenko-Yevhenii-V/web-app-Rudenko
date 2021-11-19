@@ -6,6 +6,7 @@ import ry.rudenko.englishlessonswebapp.auth.bean.ErrorResponse;
 import ry.rudenko.englishlessonswebapp.auth.bean.LoginRequest;
 import ry.rudenko.englishlessonswebapp.auth.bean.RegistrationRequest;
 import ry.rudenko.englishlessonswebapp.auth.bean.UserResponse;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -20,24 +21,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import ry.rudenko.englishlessonswebapp.enums.UserRole;
+import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
+import ry.rudenko.englishlessonswebapp.repository.AppUserRepository;
+import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 import ry.rudenko.englishlessonswebapp.service.LoginService;
 import ry.rudenko.englishlessonswebapp.service.RegistrationService;
 
 @RestController
 @ResponseBody
-@RequestMapping(path = Routes.API_ROOT +"/auth")
+@RequestMapping(path = Routes.API_ROOT + "/auth")
 @AllArgsConstructor
 @Slf4j
 public class AuthController {
     private final RegistrationService registrationService;
     private final LoginService loginService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final AppUserRepository userRepository;
 
     @PostMapping(Routes.USER_REG)
-    public ResponseEntity<?> registration(@Valid @RequestBody  RegistrationRequest registrationRequest, HttpServletResponse response) {
+    public ResponseEntity<?> registration(@Valid @RequestBody RegistrationRequest registrationRequest, HttpServletResponse response) {
         try {
             UserEntity appUser = registrationService.register(registrationRequest);
+            appUser.setRole(UserRole.USER);
             setAuthToken(appUser, response);
             setRefreshToken(appUser, response);
             return buildUserResponse(appUser);
@@ -65,7 +72,9 @@ public class AuthController {
     @GetMapping(Routes.USER_CURRENT)
     public ResponseEntity<?> current() {
         try {
-            UserEntity appUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserEntity principal = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserEntity appUser = userRepository.findByEmail(principal.getEmail()).orElseThrow(() ->
+                    new NotFoundException("User not found"));
             return buildUserResponse(appUser);
         } catch (NullPointerException e) {
             log.error(e.getLocalizedMessage());

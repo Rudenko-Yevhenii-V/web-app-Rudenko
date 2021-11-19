@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import ry.rudenko.englishlessonswebapp.enums.UserRole;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -23,10 +24,8 @@ public class UserDto {
   String lastName;
 
   @NonNull
-  Instant birthday;
+  LocalDate birthday;
 
-  @NonNull
-  UserRole role;
 }
 
 

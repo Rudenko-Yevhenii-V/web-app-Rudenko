@@ -84,7 +84,7 @@ public class AccessFilter implements Filter {
       in.close();
 
       connection.disconnect();
-
+      System.out.println("content.toString() = " + content.toString());
       return gson.fromJson(content.toString(), CurrentUser.class);
 
     } catch (IOException e) {

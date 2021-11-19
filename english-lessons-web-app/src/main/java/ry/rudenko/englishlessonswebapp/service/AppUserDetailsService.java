@@ -27,7 +27,7 @@ public class AppUserDetailsService implements UserDetailsService {
 
     public UserEntity signUpUser(UserEntity appUser) {
         boolean userExists = userRepository.findByEmail(appUser.getEmail()).isPresent();
-        if(userExists){
+        if (userExists) {
             throw new IllegalStateException("Email is already taken");
         }
         String encodedPassword = encodeString(appUser.getPassword());
@@ -36,7 +36,7 @@ public class AppUserDetailsService implements UserDetailsService {
         appUser.setEnabled(true);
         appUser = userRepository.save(appUser);
 
-        if(!appUser.isEnabled()){
+        if (!appUser.isEnabled()) {
             throw new IllegalStateException("The user is not enabled yet");
         }
 
@@ -47,7 +47,7 @@ public class AppUserDetailsService implements UserDetailsService {
         return passwordEncoder.encode(password);
     }
 
-    public UserEntity retrieveFromCache(String email){
+    public UserEntity retrieveFromCache(String email) {
         return (UserEntity) new CachingUserDetailsService(this).loadUserByUsername(email);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import ry.rudenko.englishlessonswebapp.enums.UserRole;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 import ry.rudenko.englishlessonswebapp.service.AppUserDetailsService;
 
@@ -81,13 +82,17 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserEntity appUser = userDetailsService.loadUserByUsername(getUserName(token));
-        return new UsernamePasswordAuthenticationToken(appUser, appUser.getPassword(), appUser.getAuthorities());
+        UserEntity appUser = new UserEntity();
+        appUser.setEmail(getUserName(token));
+        appUser.setRole(getUserRole(token).equals("USER")? UserRole.USER:UserRole.ADMIN);
+        return new UsernamePasswordAuthenticationToken(appUser, null, appUser.getAuthorities());
     }
 
     private String getUserName(String token) {
-        Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+    private String getUserRole(String token) {
+        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("role");
     }
 
     public String resolveToken(HttpServletRequest httpServletRequest) {

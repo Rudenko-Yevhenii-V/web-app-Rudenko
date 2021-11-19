@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ry.rudenko.englishlessonswebapp.Routes;
+import ry.rudenko.englishlessonswebapp.auth.bean.RoleRequest;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
 import ry.rudenko.englishlessonswebapp.model.dto.UserDto;
+import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 import ry.rudenko.englishlessonswebapp.service.UserService;
 
 @Log4j2
@@ -49,6 +51,12 @@ public class UserController {
   @PutMapping(Routes.UPDATE_USER)
   public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
     return ResponseEntity.ok(userService.updateUserDto(userDto));
+  }
+
+  @PutMapping("/admin" + Routes.UPDATE_USER)
+  public ResponseEntity<UserEntity> updateUserAdmin(@RequestBody RoleRequest roleRequest) {
+
+    return ResponseEntity.ok(userService.setRole(roleRequest));
   }
 
   @DeleteMapping(Routes.DELETE_USER)

@@ -21,12 +21,22 @@
     <div>
       <input type="button" value="Выход" @click="submitLogout"/>
     </div>
+
+    <div id="out">
+      <h1>All words</h1>
+      <li v-for="acces of access"
+      >{{acces}}</li>
+      <li v-for="acces of access" :key="acces.name"
+      >{{acces.name}}</li>
+    </div>
   </div>
 </template>
 
 <script>
 import {mapGetters} from "vuex"
 import "@/assets/main.css"
+
+Vue
 
 export default {
   computed: mapGetters({
@@ -35,6 +45,9 @@ export default {
   fetch() {
     this.$store.dispatch("user/fetchAccess")
   },
+
+
+
   data() {
     return {
       registrationForm: {

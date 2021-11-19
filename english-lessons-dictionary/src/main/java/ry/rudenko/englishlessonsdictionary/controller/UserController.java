@@ -41,7 +41,7 @@ public class UserController {
   UserDtoFactory userDtoFactory;
   AccessFilter accessFilter;
 
-  @PostMapping("/users/add_words")
+  @PostMapping("/users/words")
   public ResponseEntity<UserDto> AddWordsToUser(@RequestBody List<Long> wordsId) {
 
     UserEntity userEntity;

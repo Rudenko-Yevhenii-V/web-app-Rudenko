@@ -1,12 +1,16 @@
 package ry.rudenko.englishlessonswebapp.service;
 
+import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Optional;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import ry.rudenko.englishlessonswebapp.auth.bean.RoleRequest;
 import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.factory.UserDtoFactory;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
@@ -42,8 +46,7 @@ public class UserService {
     appUser.setName(userDto.getName());
     appUser.setMiddleName(userDto.getMiddleName());
     appUser.setLastName(userDto.getLastName());
-    appUser.setBirthday(userDto.getBirthday());
-    appUser.setRole(userDto.getRole());
+    appUser.setBirthday(userDto.getBirthday().atStartOfDay().toInstant(ZoneOffset.UTC));
     UserEntity user = userRepository.saveAndFlush(appUser);
     return userDtoFactory.createUserDto(user);
   }
@@ -61,6 +64,16 @@ public class UserService {
         .orElseThrow(() -> new NotFoundException("User with this log and pass exist!"));
     return user.getId();
   }
+
+    public UserEntity setRole(RoleRequest roleRequest) {
+      Optional<UserEntity> byId = userRepository.findById(roleRequest.getId());
+      if (byId.isEmpty()){
+        throw new NotFoundException(String.format("user with id=%d not found!", roleRequest.getId()));
+      }
+      UserEntity userEntity = byId.get();
+      userEntity.setRole(roleRequest.getRole());
+      return userRepository.save(userEntity);
+    }
 }
 
 
