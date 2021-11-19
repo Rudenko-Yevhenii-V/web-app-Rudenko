@@ -17,10 +17,16 @@
         <java.version>11</java.version>
         <springdoc-openapi.version>1.5.12</springdoc-openapi.version>
         <hibernate.version>5.4.32.Final</hibernate.version>
-        <spring-ver>2.5.5</spring-ver>
+        <flyway-core.version>8.0.1</flyway-core.version>
+        <lombok.version>1.18.22</lombok.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <flyway-maven-plugin.version>4.0.3</flyway-maven-plugin.version>
+        <spring-boot-maven-plugin.version>2.5.6</spring-boot-maven-plugin.version>
         <flyway.user>rttr</flyway.user>
         <flyway.password>root</flyway.password>
         <flyway.schemas>shar_db</flyway.schemas>
+
+
     </properties>
     <dependencies>
         <!--		spring-->
@@ -76,34 +82,31 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-            <version>2.1</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.hamcrest</groupId>-->
+<!--            <artifactId>hamcrest-library</artifactId>-->
+<!--            <version>2.1</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <version>${spring-ver}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!--		migration -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>8.0.1</version>
+            <version>${flyway-core.version}</version>
         </dependency>
 
-        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -111,7 +114,6 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- SWAGGER -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
@@ -125,7 +127,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <version>${jjwt.version}</version>
         </dependency>
     </dependencies>
 
@@ -134,7 +136,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.5.6</version>
+                <version>${spring-boot-maven-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.springdoc</groupId>
@@ -161,7 +163,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>4.0.3</version>
+                <version>${flyway-maven-plugin.version}</version>
                 <configuration>
                     <user>databaseUser</user>
                     <password>databasePassword</password>

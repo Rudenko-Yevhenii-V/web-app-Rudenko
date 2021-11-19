@@ -34,9 +34,8 @@ public class TestController {
 
   @PostMapping("/admin" + Routes.CREATE_OR_UPDATE_TEST)
   public ResponseEntity<TestDto> createOrUpdateTest(@RequestParam String falseAnswers,
-      @RequestParam Integer answerOrder,
       @RequestBody TestDto test) {
-    return ResponseEntity.ok(testService.createTestDtoServ(falseAnswers, answerOrder, test));
+    return ResponseEntity.ok(testService.createTestDtoServ(falseAnswers, test));
   }
 
   @DeleteMapping("/admin" + Routes.DELETE_TEST)
@@ -47,10 +46,9 @@ public class TestController {
 
   @PostMapping(Routes.COMPLETE_TEST)
   public ResponseEntity<AckDto> completeTest(
-      @PathVariable Long lessonId,
       @PathVariable Long testId,
       @PathVariable Long userId,
-      @RequestParam String answers) {
-    return ResponseEntity.ok(testService.completeTest(lessonId, testId, userId, answers));
+      @RequestParam Long answer) {
+    return ResponseEntity.ok(testService.completeTest(testId, userId, answer));
   }
 }

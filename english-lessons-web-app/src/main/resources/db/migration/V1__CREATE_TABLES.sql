@@ -30,7 +30,7 @@ create table test
 create table test_users
 (
     id           int8 not null,
-    answers      varchar(10485760),
+    answer_id      int8,
     created_at   timestamp,
     test_id      int8,
     user_user_id int8,

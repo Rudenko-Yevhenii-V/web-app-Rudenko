@@ -45,7 +45,7 @@ class ThemeControllerTest {
     MvcResult result = mvc
         .perform(
             MockMvcRequestBuilders.post(
-                "/api/v1/themes/{themeName}".replace("{themeName}", themeName)
+                "/api/v1/admin/themes/{themeName}".replace("{themeName}", themeName)
             )
         )
         .andExpect(MockMvcResultMatchers.status().isOk())

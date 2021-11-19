@@ -1,9 +1,5 @@
--- alter table if exists users_entity
---     drop constraint if exists UK_6wjjmkbpi4nmww1n8geusjhd4;
 alter table if exists users_entity
     add constraint users_entity_unique_uniques_email unique (email);
--- alter table if exists users_entity
---     drop constraint if exists UK_h2k1grtj8e6lwdc4pdgr9qc51;
 alter table if exists users_entity
     add constraint users_entity_unique_uniques_login unique (login);
 alter table if exists answer
@@ -16,6 +12,8 @@ alter table if exists test_users
     add constraint test_users_unique_uniques_foreign_test_id foreign key (test_id) references test;
 alter table if exists test_users
     add constraint test_users_unique_uniques_foreign foreign key (user_user_id) references users_entity;
+alter table if exists test_users
+    add constraint answer_id_unique_uniques_foreign foreign key (answer_id) references answer;
 alter table if exists todo
     add constraint todo_unique_uniques_foreign foreign key (user_id) references users_entity;
 alter table if exists users_entity

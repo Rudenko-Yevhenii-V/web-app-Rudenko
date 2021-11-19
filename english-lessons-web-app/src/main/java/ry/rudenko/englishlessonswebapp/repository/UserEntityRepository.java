@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
+  Optional<UserEntity> findByEmail(String email);
 
   @Query("SELECT u FROM UserEntity u " +
       "WHERE :isFiltered = FALSE " +
@@ -28,7 +29,5 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
   @Query("SELECT u FROM UserEntity u WHERE u.id =:userId")
   @NonNull
   Optional<UserEntity> findById(@NonNull Long userId);
-
-  Optional<UserEntity> findTopByLoginAndPassword(@NonNull String login, @NonNull String password);
 }
 

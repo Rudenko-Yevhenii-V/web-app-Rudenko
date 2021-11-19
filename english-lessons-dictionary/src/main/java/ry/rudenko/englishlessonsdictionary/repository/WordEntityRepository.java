@@ -10,7 +10,7 @@ public interface WordEntityRepository extends JpaRepository<WordEntity, Long> {
 
    WordEntity findWordEntityById(Long id);
    WordEntity findWordEntityByWord(String word);
-
+   boolean existsByWord( String word);
    List<WordEntity> findWordEntitiesByUserEntities(UserEntity userEntity);
 
 }

@@ -42,12 +42,14 @@ public class UserService {
   }
 
   public UserDto updateUserDto(UserDto userDto) {
-    UserEntity appUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    UserEntity principal = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Optional<UserEntity> byEmail = userRepository.findByEmail(principal.getEmail());
+    UserEntity appUser = byEmail.orElseThrow(() -> new NotFoundException("User not found"));
     appUser.setName(userDto.getName());
     appUser.setMiddleName(userDto.getMiddleName());
     appUser.setLastName(userDto.getLastName());
     appUser.setBirthday(userDto.getBirthday().atStartOfDay().toInstant(ZoneOffset.UTC));
-    UserEntity user = userRepository.saveAndFlush(appUser);
+    UserEntity user = userRepository.save(appUser);
     return userDtoFactory.createUserDto(user);
   }
 
@@ -56,13 +58,6 @@ public class UserService {
       userRepository.deleteById(userId);
     }
     return AckDto.makeDefault(true);
-  }
-
-  public Long getUserIdByLoginAndPassword(String login, String password) {
-    UserEntity user = userRepository
-        .findTopByLoginAndPassword(login, password)
-        .orElseThrow(() -> new NotFoundException("User with this log and pass exist!"));
-    return user.getId();
   }
 
     public UserEntity setRole(RoleRequest roleRequest) {

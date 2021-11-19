@@ -29,9 +29,9 @@ public class TestUserEntity   implements Serializable {
   @ManyToOne
   TestEntity test;
 
-  @Column(length = 10485760)
   @NonNull
-  String answers;
+  @ManyToOne
+  AnswerEntity answer;
 
   @Builder.Default
   @NonNull

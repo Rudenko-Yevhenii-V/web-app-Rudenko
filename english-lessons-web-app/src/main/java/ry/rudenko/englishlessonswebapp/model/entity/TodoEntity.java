@@ -34,15 +34,17 @@ public class TodoEntity   implements Serializable {
   @JoinColumn(name = "user_id")
    UserEntity user;
 
-  public static TodoEntity makeDefault(
-      String title,
-      Boolean completed,
-      String description) {
-    return builder()
-        .title(title)
-        .completed(completed)
-        .description(description)
-        .build();
-  }
+    public static TodoEntity makeDefault(
+            String title,
+            Boolean completed,
+            String description,
+            UserEntity user) {
+        return builder()
+                .title(title)
+                .completed(completed)
+                .description(description)
+                .user(user)
+                .build();
+    }
 
 }

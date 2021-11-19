@@ -2,6 +2,7 @@ package ry.rudenko.englishlessonswebapp.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -53,15 +54,14 @@ public class TestService {
     return testDtoFactory.createTestDto(test);
   }
 
-  public TestDto createTestDtoServ(String falseAnswers, Integer answerOrder, TestDto test) {
+  public TestDto createTestDtoServ(String falseAnswers, TestDto test) {
 
     List<String> falseAnswerList = Arrays.stream(falseAnswers.split(","))
         .filter(it -> !it.trim().isEmpty())
         .collect(Collectors.toList());
     TestEntity testEntity = convertTestToEntity(test);
     falseAnswerList.forEach(
-        s -> answerRepository.saveAndFlush(AnswerEntity.makeDefault(s, answerOrder)));
-
+        s -> answerRepository.saveAndFlush(AnswerEntity.makeDefault(s, 0)));
     testEntity = testRepository.saveAndFlush(testEntity);
 
     return testDtoFactory.createTestDto(testEntity);
@@ -123,38 +123,29 @@ public class TestService {
     return AckDto.makeDefault(true);
   }
 
-  public AckDto completeTest(Long lessonId, Long testId, Long userId, String answers) {
+  public AckDto completeTest( Long testId, Long userId, Long answer) {
     TestEntity test = getTestOrThrowNotFound(testId);
-
-    List<String> answerList = Arrays.stream(answers.split(","))
-        .filter(it -> !it.trim().isEmpty())
-        .collect(Collectors.toList());
-
-    if (answerList.size() != test.getQuestions().size()) {
-      throw new BadRequestException("You haven't done all qestions");
-    }
-
-    lessonRepository.findById(lessonId).orElseThrow(() ->
-        new NotFoundException(String.format("Lesson with id  \"%s\" not found.", lessonId))
-    );
-
+    List<QuestionEntity> questions = test.getQuestions();
+    QuestionEntity questionEntity = questions.get(0);
+    List<AnswerEntity> answers = questionEntity.getAnswers();
+    Optional<AnswerEntity> byIdAnswer = answerRepository.findById(answer);
     UserEntity user = userRepository
         .findById(userId)
         .orElseThrow(() ->
             new NotFoundException(String.format("User with id  \"%s\" not found.", userId))
         );
-
-
-
     testUserRepository.saveAndFlush(
         TestUserEntity.builder()
-            .answers(answers)
+                .answer(byIdAnswer.orElseThrow(() -> new NotFoundException("byIdAnswer null")))
             .user(user)
             .test(test)
             .build()
     );
+    AnswerEntity byIdAnswer_null = byIdAnswer.orElseThrow(() ->
+            new NotFoundException("byIdAnswer null"));
 
-    return AckDto.makeDefault(true);
+    return AckDto.makeDefault(
+            answers.get(0).getAnswerOrder().equals(byIdAnswer_null.getAnswerOrder()));
   }
 
   private TestEntity getTestOrThrowNotFound(Long testId) {
