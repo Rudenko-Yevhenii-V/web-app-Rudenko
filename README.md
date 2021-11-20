@@ -64,11 +64,12 @@ App for learning English.
 
 * [spring.io](https://spring.io/)
 * [java](https://www.java.com/)
+* [mockito](https://site.mockito.org/)
+* [junit](https://junit.org/)
 * [docker](https://www.docker.com/)
 * [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
+* [Vuex.js](https://vuex.vuejs.org)
 * [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

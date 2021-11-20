@@ -35,11 +35,6 @@ class ThemeControllerTest {
   ObjectMapper objectMapper;
 
   @Test
-  void fetchThemes() {
-
-  }
-
-  @Test
   void createTheme() throws Exception {
     String themeName = "Timestest";
     MvcResult result = mvc
@@ -57,10 +52,6 @@ class ThemeControllerTest {
     log.info(result.getResponse().toString());
   }
 
-  @Test
-  void deleteTheme() {
-
-  }
 }
 
 

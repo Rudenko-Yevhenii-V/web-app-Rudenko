@@ -5,19 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletResponse;
-import ry.rudenko.englishlessonswebapp.auth.access.JwtTokenProvider;
 import ry.rudenko.englishlessonswebapp.auth.bean.RegistrationRequest;
 import ry.rudenko.englishlessonswebapp.auth.bean.UserResponse;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
-import ry.rudenko.englishlessonswebapp.repository.AppUserRepository;
 import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 import ry.rudenko.englishlessonswebapp.service.LoginService;
 import ry.rudenko.englishlessonswebapp.service.RegistrationService;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @SpringBootTest
@@ -28,7 +23,7 @@ class WebAppApplicationTests {
 	@Autowired
 	private  LoginService loginService;
 	@Autowired
-	private AppUserRepository userEntityRepository;
+	private UserEntityRepository userEntityRepository;
 	@Test
 	void testRegisterUser() {
 		var name = "name";

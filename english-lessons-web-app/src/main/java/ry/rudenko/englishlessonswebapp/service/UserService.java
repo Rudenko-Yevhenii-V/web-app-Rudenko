@@ -8,7 +8,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ry.rudenko.englishlessonswebapp.auth.bean.RoleRequest;
 import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
@@ -41,8 +40,9 @@ public class UserService {
     return userDtoFactory.createUserDtoList(users);
   }
 
-  public UserDto updateUserDto(UserDto userDto) {
-    UserEntity principal = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+  public UserDto updateUser(UserDto userDto,
+      UserEntity principal) {
+
     Optional<UserEntity> byEmail = userRepository.findByEmail(principal.getEmail());
     UserEntity appUser = byEmail.orElseThrow(() -> new NotFoundException("User not found"));
     appUser.setName(userDto.getName());

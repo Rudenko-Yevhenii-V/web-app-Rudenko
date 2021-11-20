@@ -9,14 +9,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
-import ry.rudenko.englishlessonswebapp.repository.AppUserRepository;
+import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 
 @Log4j2
 @Service
 @AllArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
 
-    private final AppUserRepository userRepository;
+    private final UserEntityRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
