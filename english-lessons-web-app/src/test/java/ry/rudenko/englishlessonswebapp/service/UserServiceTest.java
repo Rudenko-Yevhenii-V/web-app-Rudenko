@@ -72,6 +72,7 @@ class UserServiceTest {
 
     List<UserDto> test2 = userService.createUserDtoList("t", 2L);
     Assertions.assertNotEquals(test2.size(), 0);
+    userEntityRepository.deleteAll();
   }
 
   @Order(2)
@@ -84,6 +85,7 @@ class UserServiceTest {
 
     List<UserDto> test2 = userService.createUserDtoListServ("l");
     Assertions.assertNotEquals(test2.size(), 0);
+    userEntityRepository.deleteAll();
   }
 
   @Order(3)
@@ -94,6 +96,7 @@ class UserServiceTest {
     roleRequest.setId(userEntity.getId());
     UserEntity userEntity = userService.setRole(roleRequest);
     assertEquals(userEntity.getRole(), UserRole.ADMIN);
+    userEntityRepository.deleteAll();
   }
 
   @Order(4)
@@ -109,6 +112,7 @@ class UserServiceTest {
     Optional<UserEntity> byEmail = userEntityRepository.findByEmail("test1@gmail.com");
     UserEntity userEntity = byEmail.get();
     assertEquals("updated name", userEntity.getName());
+    userEntityRepository.deleteAll();
   }
 
   @Order(5)
@@ -117,6 +121,7 @@ class UserServiceTest {
     AckDto ackDto = userService.deleteUser(userEntity.getId());
     Assertions.assertTrue(ackDto.getAnswer());
     Assertions.assertTrue(userEntityRepository.findById(userEntity.getId()).isEmpty());
+    userEntityRepository.deleteAll();
   }
 
 }
