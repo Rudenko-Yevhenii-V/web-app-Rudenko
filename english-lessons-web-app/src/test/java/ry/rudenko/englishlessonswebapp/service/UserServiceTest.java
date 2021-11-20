@@ -10,9 +10,12 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,6 +34,7 @@ import ry.rudenko.englishlessonswebapp.repository.ThemeRepository;
 import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 
 @Log4j2
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
@@ -45,10 +49,15 @@ class UserServiceTest {
   LessonRepository lessonRepository;
   @Autowired
   ThemeRepository themeRepository;
-  UserEntity userEntity;
+  UserEntity userEntity;;
+
 
   @BeforeEach
   void init() {
+    themeRepository.deleteAll();
+    lessonRepository.deleteAll();
+    userEntityRepository.deleteAll();
+
     ThemeEntity themeEntity = themeRepository.saveAndFlush(ThemeEntity.makeDefault("Test theme!"));
     LessonEntity save = lessonRepository.save(
         LessonEntity.makeDefault("some text", themeEntity));
@@ -57,7 +66,6 @@ class UserServiceTest {
     userEntity.setEmail("test1@gmail.com");
     userEntity.setPassword("test1@gmail.com");
     userEntity.setLessons(save);
-
     this.userEntity = userEntityRepository.save(userEntity);
 
   }
@@ -72,7 +80,6 @@ class UserServiceTest {
 
     List<UserDto> test2 = userService.createUserDtoList("t", 2L);
     Assertions.assertNotEquals(test2.size(), 0);
-    userEntityRepository.deleteAll();
   }
 
   @Order(2)
@@ -85,7 +92,6 @@ class UserServiceTest {
 
     List<UserDto> test2 = userService.createUserDtoListServ("l");
     Assertions.assertNotEquals(test2.size(), 0);
-    userEntityRepository.deleteAll();
   }
 
   @Order(3)
@@ -96,7 +102,6 @@ class UserServiceTest {
     roleRequest.setId(userEntity.getId());
     UserEntity userEntity = userService.setRole(roleRequest);
     assertEquals(userEntity.getRole(), UserRole.ADMIN);
-    userEntityRepository.deleteAll();
   }
 
   @Order(4)
@@ -112,7 +117,6 @@ class UserServiceTest {
     Optional<UserEntity> byEmail = userEntityRepository.findByEmail("test1@gmail.com");
     UserEntity userEntity = byEmail.get();
     assertEquals("updated name", userEntity.getName());
-    userEntityRepository.deleteAll();
   }
 
   @Order(5)
@@ -121,7 +125,6 @@ class UserServiceTest {
     AckDto ackDto = userService.deleteUser(userEntity.getId());
     Assertions.assertTrue(ackDto.getAnswer());
     Assertions.assertTrue(userEntityRepository.findById(userEntity.getId()).isEmpty());
-    userEntityRepository.deleteAll();
   }
 
 }
