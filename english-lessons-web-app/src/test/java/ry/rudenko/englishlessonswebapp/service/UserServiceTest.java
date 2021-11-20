@@ -72,21 +72,13 @@ class UserServiceTest {
 
   @Order(1)
   @Test
-  void createUserDtoList() {
-    List<UserDto> test = userService.createUserDtoList("l", 2L);
+  void createUserDtoListServ() {
+    List<UserDto> test = userService.createUserDtoListServ("last");
     Assertions.assertEquals(test.size(), 1);
 
   }
 
   @Order(2)
-  @Test
-  void createUserDtoListServ() {
-    List<UserDto> test = userService.createUserDtoListServ("l");
-    Assertions.assertEquals(test.size(), 1);
-
-  }
-
-  @Order(3)
   @Test
   void setRole() {
     RoleRequest roleRequest = new RoleRequest();
@@ -96,7 +88,7 @@ class UserServiceTest {
     assertEquals(userEntity.getRole(), UserRole.ADMIN);
   }
 
-  @Order(4)
+  @Order(3)
   @Test
   void updateUser() {
     UserDto userDto = UserDto.builder()
@@ -111,7 +103,7 @@ class UserServiceTest {
     assertEquals("updated name", userEntity.getName());
   }
 
-  @Order(5)
+  @Order(4)
   @Test
   void deleteUser() {
     AckDto ackDto = userService.deleteUser(userEntity.getId());
