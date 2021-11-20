@@ -20,8 +20,7 @@ class WebAppApplicationTests {
 
 	@Autowired
 	private  RegistrationService registrationService;
-	@Autowired
-	private  LoginService loginService;
+
 	@Autowired
 	private UserEntityRepository userEntityRepository;
 	@Test
@@ -41,6 +40,7 @@ class WebAppApplicationTests {
 		Assertions.assertEquals(email, userEntity.getEmail());
 		Assertions.assertNotEquals(password, userEntity.getPassword());
 		Assertions.assertNotNull(userEntity.getId());
+		userEntityRepository.deleteAll();
 	}
 	private ResponseEntity<?> buildUserResponse(UserEntity appUser) {
 		return ResponseEntity.ok(new UserResponse(appUser));
