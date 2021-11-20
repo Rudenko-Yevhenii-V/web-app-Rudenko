@@ -74,24 +74,16 @@ class UserServiceTest {
   @Test
   void createUserDtoList() {
     List<UserDto> test = userService.createUserDtoList("l", 2L);
-    UserDto userDto = test.get(0);
-    char c = userDto.getLastName().charAt(0);
-    assertEquals('l', c);
+    Assertions.assertEquals(test.size(), 1);
 
-    List<UserDto> test2 = userService.createUserDtoList("t", 2L);
-    Assertions.assertNotEquals(test2.size(), 0);
   }
 
   @Order(2)
   @Test
   void createUserDtoListServ() {
     List<UserDto> test = userService.createUserDtoListServ("l");
-    UserDto userDto = test.get(0);
-    char c = userDto.getLastName().charAt(0);
-    assertEquals('l', c);
+    Assertions.assertEquals(test.size(), 1);
 
-    List<UserDto> test2 = userService.createUserDtoListServ("l");
-    Assertions.assertNotEquals(test2.size(), 0);
   }
 
   @Order(3)
