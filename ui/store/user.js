@@ -42,6 +42,11 @@ export const actions = {
       context.dispatch("fetchAccess")
     })
   },
+  update_role(context, data){
+    this.$axios.put("/api/v1/auth/admin/users/update/role", data).then(res => {
+      context.dispatch("fetchAccess")
+    })
+  },
   logout(context){
     this.$axios.get("/api/v1/auth/logout").then(res => {
       context.dispatch("fetchAccess")

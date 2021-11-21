@@ -36,6 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/auth/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
                         "/api/v1/auth/registration", "/api/v1/auth/current").permitAll()
                 .antMatchers(HttpMethod.PUT, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated().and()
                 // allow cross-origin requests for all endpoints

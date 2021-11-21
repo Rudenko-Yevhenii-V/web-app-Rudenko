@@ -1,41 +1,31 @@
-// export const state = () => ({
-//   access: [],
-//   // 1234rttr
-//   accessuser: null
-// })
-//
-// export const getters = {
-//   getAccess(state){
-//     return state.access
-//   },
-//   // 1234rttr
-//
-//   getAccessuser(state){
-//     return state.accessuser
-//   },
-// }
-//
-// export const actions = {
-//   fetchAccess(context){
-//     this.$axios.get("/api/v1/client/words").then(res => {
-//       context.commit("setAccess", res.data)
-//     })
-//   },
-//   // 1234rttr
-//   fetchAccessuser(context){
-//     this.$axios.get("/api/v1/client/accessUser").then(res => {
-//       context.commit("setAccessuser", res.data)
-//     })
-//   }
-// }
-//
-// export const mutations = {
-//   setAccess(state, data){
-//     state.access = data
-//   },
-//   // 1234rttr
-//   setAccessuser(state, data){
-//     state.accessuser = data;
-//   }
-// }
+import Vue from 'vue'
+import Vuex from 'vuex'
 
+export const state = () => ({
+  words: null
+})
+
+export const getters = {
+  getWords(state){
+    return state.words
+  },
+}
+
+export const actions = {
+  fetchWords(context){
+    this.$axios.get("/api/v1/client/words").then(res => {
+      context.commit("setWords", res.data)
+    })
+  },
+  add_words(context, data){
+    this.$axios.post("/api/v1/client/words", data).then(res => {
+      context.dispatch("fetchWords")
+    })
+  },
+}
+
+export const mutations = {
+  setWords(state, data){
+    state.words = data;
+  }
+}
