@@ -21,7 +21,7 @@ import ry.rudenko.englishlessonswebapp.service.AuthService;
 
 @RestController
 @ResponseBody
-@RequestMapping(path = Routes.API_ROOT + "/auth")
+@RequestMapping(path = Routes.API_ROOT)
 @AllArgsConstructor
 @Slf4j
 public class AuthController {

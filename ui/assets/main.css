@@ -3,8 +3,19 @@ body{
 
 }
 #out{
-  color: brown;
+
 }
 .input_area{
   font-size: 75%;
+  text-align: center;
 }
+
+.asses{
+  color: brown;
+  font-size: 100%;
+}
+.btnsize{
+
+  font-size: 100%;
+}
+

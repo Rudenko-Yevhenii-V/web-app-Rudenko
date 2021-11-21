@@ -64,13 +64,7 @@ public class UserController {
   public ResponseEntity<AckDto> deleteUser(@PathVariable Long userId) {
     return ResponseEntity.ok(userService.deleteUser(userId));
   }
-//
-//  @GetMapping(Routes.GET_USER_ID_BY_LOGIN_AND_PASSWORD)
-//  public ResponseEntity<Long> getUserIdByLoginAndPassword(
-//      @RequestHeader(value="login") String login,
-//      @RequestHeader(value="password") String password) {
-//    return ResponseEntity.ok(userService.getUserIdByLoginAndPassword(login, password));
-//  }
+
 }
 
 

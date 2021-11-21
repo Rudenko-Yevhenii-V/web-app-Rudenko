@@ -6,7 +6,7 @@ public final class Routes {
     throw new AssertionError("non-instantiable class");
   }
 
-  public static final String API_ROOT = "/api/v1";
+  public static final String API_ROOT = "/api/v1/auth";
 
   public static final String FETCH_LESSONS = "/themes/{themeId}/lessons";
   public static final String CREATE_LESSONS = "/themes/{themeId}/lessons/{lessonsText}";

@@ -29,8 +29,10 @@ public class GetAccessController {
       currentUser = new CurrentUser();
       currentUser.setName("guest");
     }
+    String user = currentUser.getName();
+    System.out.println("user = " + user);
     return ResponseEntity.ok(
-            currentUserProvider.get().isEnabled() ? "Access granted. Hello " + currentUser.getName() : "Forbidden!");
+            currentUserProvider.get().isEnabled() ? "Access granted. Hello " +  user: "Forbidden! Hello " + user);
   }
 
 }

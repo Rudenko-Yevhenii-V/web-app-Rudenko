@@ -41,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // allow cross-origin requests for all endpoints
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
+                .formLogin().disable()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher(Routes.API_ROOT + Routes.USER_LOGOUT))
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
