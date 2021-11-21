@@ -1,17 +1,10 @@
-// new Vue({
-//   el: '#out',
-//   data: {
-//     acces: {
-//       name: '',
-//       email: '',
-//       enable: true
-//     }
-//   }
-// })
+import Vue from 'vue'
+import Vuex from 'vuex'
+
 export const state = () => ({
   access: null,
     // 1234rttr
-  accessuser: null
+  words: null
 })
 
 export const getters = {
@@ -20,21 +13,21 @@ export const getters = {
   },
   // 1234rttr
 
-  getAccessuser(state){
-    return state.accessuser
+  getWords(state){
+    return state.words
   },
 }
 
 export const actions = {
   fetchAccess(context){
-    this.$axios.get("/api/v1/auth/current").then(res => {
+    this.$axios.get("/api/v1/client/access_user").then(res => {
       context.commit("setAccess", res.data)
     })
   },
   // 1234rttr
-  fetchAccessuser(context){
-    this.$axios.get("/api/v1/client/accessUser").then(res => {
-      context.commit("setAccessuser", res.data)
+  fetchWords(context){
+    this.$axios.get("/api/v1/client/words").then(res => {
+      context.commit("setWords", res.data)
     })
   },
   login(context, data){
@@ -59,7 +52,7 @@ export const mutations = {
     state.access = data
   },
   // 1234rttr
-  setAccessuser(state, data){
-    state.accessuser = data;
+  setWords(state, data){
+    state.words = data;
   }
 }
