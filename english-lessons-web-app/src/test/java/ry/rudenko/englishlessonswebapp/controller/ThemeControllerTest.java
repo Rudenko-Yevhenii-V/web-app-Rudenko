@@ -35,12 +35,14 @@ class ThemeControllerTest {
   ObjectMapper objectMapper;
 
   @Test
+  @WithMockUser(username = "username", roles={"ADMIN"})
   void createTheme() throws Exception {
     String themeName = "Timestest";
     MvcResult result = mvc
         .perform(
             MockMvcRequestBuilders.post(
-                "/api/v1/auth/admin/themes/{themeName}".replace("{themeName}", themeName)
+                "/api/v1/auth/admin/themes/{themeName}".
+                    replace("{themeName}", themeName)
             )
         )
         .andExpect(MockMvcResultMatchers.status().isOk())
