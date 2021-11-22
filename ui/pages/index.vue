@@ -33,9 +33,15 @@
         </b>
       </div>
     </nav>
-
-
-
+    <h1>Tests</h1>
+    {{ tests }}
+    <h1>USERS</h1>
+    <ul>
+      <li v-for="all_user of all_users"
+      >
+        ID: {{ all_user.id }} Name: {{ all_user.name }} Email: {{ all_user.email }}
+      </li>
+    </ul>
     <h1>For ADMIN: </h1>
     <div class="input_area site-header sticky-top py-1">
       <div class="container">
@@ -72,6 +78,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import {mapGetters} from "vuex"
 import "@/assets/bootstrap.css"
 import "@/assets/main.css"
@@ -79,11 +86,15 @@ import "@/assets/main.css"
 export default {
   computed: mapGetters({
     access: "user/getAccess",
-    words: "out/getWords"
+    words: "out/getWords",
+    all_users: "user/getAllUsers",
+    tests: "out/getTests",
   }),
   fetch() {
     this.$store.dispatch("user/fetchAccess"),
-      this.$store.dispatch("out/fetchWords")
+      this.$store.dispatch("out/fetchWords"),
+      this.$store.dispatch("user/fetchAllUsers")
+      this.$store.dispatch("out/fetchTests")
   },
   data() {
     return {

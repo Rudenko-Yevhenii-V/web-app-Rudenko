@@ -42,8 +42,8 @@ public class UserController {
     return ResponseEntity.ok(userService.createUserDtoList(filterLastName, lessonId));
   }
 
-  @GetMapping(Routes.FETCH_USERS)
-  public ResponseEntity<List<UserDto>> fetchUsers(
+  @GetMapping("/admin/" +Routes.FETCH_USERS)
+  public ResponseEntity<List<UserEntity>> fetchUsers(
       @RequestParam(defaultValue = "") String filterLastName) {
     return ResponseEntity.ok(userService.createUserDtoListServ(filterLastName));
   }

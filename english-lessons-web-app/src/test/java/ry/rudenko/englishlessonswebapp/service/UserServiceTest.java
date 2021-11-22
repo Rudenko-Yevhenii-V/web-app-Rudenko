@@ -10,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -49,7 +48,7 @@ class UserServiceTest {
   LessonRepository lessonRepository;
   @Autowired
   ThemeRepository themeRepository;
-  UserEntity userEntity;;
+  UserEntity userEntity;
 
 
   @BeforeEach
@@ -73,7 +72,7 @@ class UserServiceTest {
   @Order(1)
   @Test
   void createUserDtoListServ() {
-    List<UserDto> test = userService.createUserDtoListServ("last");
+    List<UserEntity> test = userService.createUserDtoListServ("last");
     Assertions.assertEquals(test.size(), 1);
 
   }

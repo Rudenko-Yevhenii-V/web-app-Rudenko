@@ -34,15 +34,14 @@ public class UserService {
     return userDtoFactory.createUserDtoList(users);
   }
 
-  public List<UserDto> createUserDtoListServ(String filterLastName) {
+  public List<UserEntity> createUserDtoListServ(String filterLastName) {
     boolean isFiltered = !filterLastName.trim().isEmpty();
     List<UserEntity> users = userRepository.findAllByFilter(isFiltered, filterLastName);
-    return userDtoFactory.createUserDtoList(users);
+    return users;
   }
 
   public UserDto updateUser(UserDto userDto,
       UserEntity principal) {
-
     Optional<UserEntity> byEmail = userRepository.findByEmail(principal.getEmail());
     UserEntity appUser = byEmail.orElseThrow(() -> new NotFoundException("User not found"));
     appUser.setName(userDto.getName());

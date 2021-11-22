@@ -32,9 +32,10 @@ public class AnswerEntity  implements Serializable {
   @Column(name = "question_id", updatable = false, insertable = false)
   Long questionId;
 
-  public static AnswerEntity makeDefault(String falseAnswer, Integer answerOrder) {
+  public static AnswerEntity makeDefault(String falseAnswer, Integer answerOrder, QuestionEntity questionEntity) {
 
     return builder()
+        .question(questionEntity)
         .text(falseAnswer)
         .answerOrder(answerOrder)
         .build();

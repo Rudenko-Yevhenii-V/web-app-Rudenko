@@ -30,11 +30,11 @@ import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
 @Service
 public class TestService {
 
-   TestRepository testRepository;
-   TestDtoFactory testDtoFactory;
-   AnswerRepository answerRepository;
-   UserEntityRepository userRepository;
-   TestUserRepository testUserRepository;
+  TestRepository testRepository;
+  TestDtoFactory testDtoFactory;
+  AnswerRepository answerRepository;
+  UserEntityRepository userRepository;
+  TestUserRepository testUserRepository;
 
   public List<TestDto> createTestDtoList(String filter) {
     boolean isFiltered = !filter.trim().isEmpty();
@@ -57,9 +57,12 @@ public class TestService {
         .filter(it -> !it.trim().isEmpty())
         .collect(Collectors.toList());
     TestEntity testEntity = convertTestToEntity(test);
-    falseAnswerList.forEach(
-        s -> answerRepository.saveAndFlush(AnswerEntity.makeDefault(s, 0)));
     testEntity = testRepository.saveAndFlush(testEntity);
+
+    TestEntity finalTestEntity = testEntity;
+    falseAnswerList.forEach(
+        s -> answerRepository.saveAndFlush(AnswerEntity.makeDefault(s, 0,
+            finalTestEntity.getQuestions().get(0))));
 
     return testDtoFactory.createTestDto(testEntity);
   }
@@ -103,7 +106,9 @@ public class TestService {
   }
 
   private AnswerEntity convertAnswerToEntity(AnswerDto dto) {
-    AnswerEntity answer = AnswerEntity.makeDefault(dto.getName(), dto.getOrder());
+    AnswerEntity answer = new AnswerEntity();
+    answer.setText(dto.getName());
+    answer.setAnswerOrder(dto.getOrder());
     answer.setId(dto.getId());
     return answer;
   }
@@ -120,7 +125,7 @@ public class TestService {
     return AckDto.makeDefault(true);
   }
 
-  public AckDto completeTest( Long testId, Long userId, Long answer) {
+  public AckDto completeTest(Long testId, Long userId, Long answer) {
     TestEntity test = getTestOrThrowNotFound(testId);
     List<QuestionEntity> questions = test.getQuestions();
     QuestionEntity questionEntity = questions.get(0);
@@ -133,16 +138,16 @@ public class TestService {
         );
     testUserRepository.saveAndFlush(
         TestUserEntity.builder()
-                .answer(byIdAnswer.orElseThrow(() -> new NotFoundException("byIdAnswer null")))
+            .answer(byIdAnswer.orElseThrow(() -> new NotFoundException("byIdAnswer null")))
             .user(user)
             .test(test)
             .build()
     );
     AnswerEntity byIdAnswer_null = byIdAnswer.orElseThrow(() ->
-            new NotFoundException("byIdAnswer null"));
+        new NotFoundException("byIdAnswer null"));
 
     return AckDto.makeDefault(
-            answers.get(0).getAnswerOrder().equals(byIdAnswer_null.getAnswerOrder()));
+        answers.get(0).getAnswerOrder().equals(byIdAnswer_null.getAnswerOrder()));
   }
 
   private TestEntity getTestOrThrowNotFound(Long testId) {

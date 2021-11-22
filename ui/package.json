@@ -17,5 +17,9 @@
     "bootstrap": "^4.0.0-beta",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1"
-  }
+  },
+  "description": "## Build Setup",
+  "main": "nuxt.config.js",
+  "author": "",
+  "license": "ISC"
 }

@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 
 export const state = () => ({
   access: null,
-  words: null
+  words: null,
+  all_users: null
 })
 
 export const getters = {
@@ -14,6 +15,9 @@ export const getters = {
   getWords(state){
     return state.words
   },
+  getAllUsers(state){
+    return state.all_users
+  }
 }
 
 export const actions = {
@@ -25,6 +29,11 @@ export const actions = {
   fetchWords(context){
     this.$axios.get("/api/v1/client/words").then(res => {
       context.commit("setWords", res.data)
+    })
+  },
+  fetchAllUsers(context){
+    this.$axios.get("/api/v1/auth/admin/users/all").then(res => {
+      context.commit("setAllUsers", res.data)
     })
   },
   login(context, data){
@@ -57,6 +66,9 @@ export const actions = {
 export const mutations = {
   setAccess(state, data){
     state.access = data
+  },
+  setAllUsers(state, data){
+    state.all_users = data
   },
   setWords(state, data){
     state.words = data;
