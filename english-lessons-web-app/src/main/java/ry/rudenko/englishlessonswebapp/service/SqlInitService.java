@@ -18,16 +18,17 @@ import javax.sql.DataSource;
 @Service
 public class SqlInitService {
 
-    private final DataSource dataSource;
-    private final ThemeRepository themeRepository;
+  private final DataSource dataSource;
+  private final ThemeRepository themeRepository;
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void loadData() {
-        if(!themeRepository.existsByName("theme")){
-            ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false,
-                    false, "UTF-8", new ClassPathResource("db/SQL.sql"));
-            resourceDatabasePopulator.execute(dataSource);
-        }
-
+  @EventListener(ApplicationReadyEvent.class)
+  public void loadData() {
+    if (!themeRepository.existsByName("theme")) {
+      ResourceDatabasePopulator resourceDatabasePopulator =
+          new ResourceDatabasePopulator(false,
+          false, "UTF-8", new ClassPathResource("db/SQL.sql"));
+      resourceDatabasePopulator.execute(dataSource);
     }
+
+  }
 }

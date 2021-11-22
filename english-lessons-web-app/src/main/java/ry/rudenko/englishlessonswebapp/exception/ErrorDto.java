@@ -1,13 +1,11 @@
-package ry.rudenko.englishlessonswebapp.model.dto;
+package ry.rudenko.englishlessonswebapp.exception;
 
-
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
 @Data
@@ -15,37 +13,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDto {
+public class ErrorDto {
 
-  @NonNull
-  String name;
+  String error;
 
-  String middleName;
-
-  @NonNull
-  String lastName;
-
-  @NonNull
-  LocalDate birthday;
-
+  @JsonProperty("error_description")
+  String errorDescription;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

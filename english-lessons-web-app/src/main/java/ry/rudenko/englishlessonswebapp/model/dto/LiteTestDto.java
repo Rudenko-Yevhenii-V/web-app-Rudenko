@@ -15,6 +15,5 @@ import lombok.experimental.SuperBuilder;
 public class LiteTestDto {
 
   Long id;
-
   String name;
 }

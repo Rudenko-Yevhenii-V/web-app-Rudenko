@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.model.dto.TodoDto;
 import ry.rudenko.englishlessonswebapp.model.entity.TodoEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;

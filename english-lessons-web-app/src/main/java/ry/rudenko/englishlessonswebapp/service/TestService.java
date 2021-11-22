@@ -8,7 +8,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import ry.rudenko.englishlessonswebapp.exception.BadRequestException;
 import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.factory.TestDtoFactory;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
@@ -21,7 +20,6 @@ import ry.rudenko.englishlessonswebapp.model.entity.TestEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.TestUserEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.UserEntity;
 import ry.rudenko.englishlessonswebapp.repository.AnswerRepository;
-import ry.rudenko.englishlessonswebapp.repository.LessonRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestRepository;
 import ry.rudenko.englishlessonswebapp.repository.TestUserRepository;
 import ry.rudenko.englishlessonswebapp.repository.UserEntityRepository;
@@ -37,7 +35,6 @@ public class TestService {
    AnswerRepository answerRepository;
    UserEntityRepository userRepository;
    TestUserRepository testUserRepository;
-   LessonRepository lessonRepository;
 
   public List<TestDto> createTestDtoList(String filter) {
     boolean isFiltered = !filter.trim().isEmpty();

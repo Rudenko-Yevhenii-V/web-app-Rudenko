@@ -5,7 +5,6 @@ import javax.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,7 +27,7 @@ public class TodoController {
    TodoService todoService;
 
   @PostMapping
-  public ResponseEntity createTodo(@RequestBody TodoDto tododto,
+  public ResponseEntity<?> createTodo(@RequestBody TodoDto tododto,
       @RequestParam Long userId) {
     try {
       return ResponseEntity.ok(todoService.createEntity(tododto, userId));
@@ -38,7 +37,7 @@ public class TodoController {
   }
 
   @PutMapping
-  public ResponseEntity completeTodo(@RequestParam Long id) {
+  public ResponseEntity<?> completeTodo(@RequestParam Long id) {
     try {
       return ResponseEntity.ok(todoService.complete(id));
     } catch (Exception e) {

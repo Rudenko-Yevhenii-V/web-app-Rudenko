@@ -6,12 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,52 +22,51 @@ import ry.rudenko.englishlessonswebapp.auth.access.JwtTokenConfig;
 @AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenConfig jwtTokenConfig;
+  private final JwtTokenConfig jwtTokenConfig;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http
+        .csrf().disable()
 //        .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-                .authorizeRequests()
-                .antMatchers("/api/v1/auth/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
-                        "/api/v1/auth/registration", "/api/v1/auth/current").permitAll()
-                .antMatchers(HttpMethod.PUT, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
-                .anyRequest()
-                .authenticated().and()
-                // allow cross-origin requests for all endpoints
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
-                .formLogin().disable()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .and()
-                .apply(jwtTokenConfig);
-    }
+        .authorizeRequests()
+        .antMatchers("/api/v1/auth/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
+            "/api/v1/auth/registration", "/api/v1/auth/current").permitAll()
+        .antMatchers(HttpMethod.PUT, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.DELETE, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
+        .antMatchers(HttpMethod.POST, Routes.API_ROOT + "/admin/**").hasRole("ADMIN")
+        .anyRequest()
+        .authenticated().and()
+        .cors().configurationSource(corsConfigurationSource())
+        .and()
+        .formLogin().disable()
+        .logout()
+        .invalidateHttpSession(true)
+        .clearAuthentication(true)
+        .deleteCookies("JSESSIONID")
+        .and()
+        .apply(jwtTokenConfig);
+  }
 
-    private CorsConfigurationSource corsConfigurationSource() {
-        var source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
-    }
+  private CorsConfigurationSource corsConfigurationSource() {
+    var source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    return source;
+  }
 
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+  @Bean
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
-    @Bean
-    public WebMvcConfigurer corsConfig() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "http://localhost:8087");
-            }
-        };
-    }
+  @Bean
+  public WebMvcConfigurer corsConfig() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+            .allowedOrigins("http://localhost:3000", "http://localhost:8087");
+      }
+    };
+  }
 }

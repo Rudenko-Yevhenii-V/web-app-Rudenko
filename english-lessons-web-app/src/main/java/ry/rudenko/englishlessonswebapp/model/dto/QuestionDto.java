@@ -13,10 +13,7 @@ import java.util.List;
 public class QuestionDto {
 
   Long id;
-
   Integer order;
-
   String text;
-
   List<AnswerDto> answers;
 }

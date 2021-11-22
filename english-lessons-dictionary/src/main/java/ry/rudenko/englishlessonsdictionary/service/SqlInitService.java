@@ -17,16 +17,17 @@ import javax.sql.DataSource;
 @Service
 public class SqlInitService {
 
-    private final DataSource dataSource;
-    private final WordEntityRepository wordEntityRepository;
+  private final DataSource dataSource;
+  private final WordEntityRepository wordEntityRepository;
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void loadData() {
-        if(!wordEntityRepository.existsByWord("word")){
-            ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false,
-                    false, "UTF-8", new ClassPathResource("db/SQL.sql"));
-            resourceDatabasePopulator.execute(dataSource);
-        }
-
+  @EventListener(ApplicationReadyEvent.class)
+  public void loadData() {
+    if (!wordEntityRepository.existsByWord("word")) {
+      ResourceDatabasePopulator resourceDatabasePopulator =
+          new ResourceDatabasePopulator(false,
+          false, "UTF-8", new ClassPathResource("db/SQL.sql"));
+      resourceDatabasePopulator.execute(dataSource);
     }
+
+  }
 }
