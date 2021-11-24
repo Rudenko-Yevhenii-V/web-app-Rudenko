@@ -37,7 +37,7 @@ class ThemeControllerTest {
   @Test
   @WithMockUser(username = "username", roles={"ADMIN"})
   void createTheme() throws Exception {
-    String themeName = "Timestest";
+    String themeName = "Themestest";
     MvcResult result = mvc
         .perform(
             MockMvcRequestBuilders.post(

@@ -21,3 +21,11 @@ body{
 .btn{
   font-size: 75%;
 }
+.test_class{
+  background-color: #f5f0f0;
+  border: 4px double black;
+  border-bottom-color: #1b1e21;
+}
+.sticky-top{
+  position: relative;
+}

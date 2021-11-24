@@ -17,7 +17,7 @@ public final class Routes {
   public static final String GET_TEST = "/tests/{testId}";
   public static final String CREATE_OR_UPDATE_TEST = "/tests";
   public static final String DELETE_TEST = "/tests/{testId}";
-  public static final String COMPLETE_TEST = "/lessons/{lessonId}/users/{userId}/tests/{testId}/compete";
+  public static final String COMPLETE_TEST = "/tests/{testId}/users/{userId}/compete";
 
   public static final String FETCH_THEME = "/themes";
   public static final String CREATE_THEME = "/themes/{themeName}";

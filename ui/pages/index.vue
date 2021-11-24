@@ -31,15 +31,33 @@
             <div><input class="btn btn-info" type="button" value="Выход" @click="submitLogout"/></div>
           </form>
         </b>
+
+
       </div>
     </nav>
+<div class="test_class">
     <h1>Tests</h1>
-    {{ tests }}
+  <hr>
+    <b class="input_area  py-2 d-none d-md-inline-block">
+      <form @submit="submitIdTest()">
+        <div><input type="text" placeholder="id" v-model="idForm" v-on:keyup.enter="setIdTest" /></div>
+        <div><input class="btn btn-info" type="button" value="Id Test" @click="submitIdTest()"/></div>
+      </form>
+    </b>
+  <hr>
+  {{ answer }}
+  <form @submit="submitAdd_anwser">
+    <div><input type="text" placeholder="testId" v-model="setAnswerForm.testId"/></div>
+    <div><input type="text" placeholder="userId" v-model="setAnswerForm.userId"/></div>
+    <div><input type="text" placeholder="answer" v-model="setAnswerForm.answer"/></div>
+    <div><input class="btn btn-info" type="submit" value="OK"/></div>
+  </form>
+</div>
     <h1>USERS</h1>
     <ul>
       <li v-for="all_user of all_users"
       >
-        ID: {{ all_user.id }} Name: {{ all_user.name }} Email: {{ all_user.email }}
+        ID: {{ all_user.id }} ===>  Name: {{ all_user.name }}   ===>    Email: {{ all_user.email }}
       </li>
     </ul>
     <h1>For ADMIN: </h1>
@@ -89,12 +107,13 @@ export default {
     words: "out/getWords",
     all_users: "user/getAllUsers",
     tests: "out/getTests",
+    answer: "out/getAnswer",
   }),
   fetch() {
-    this.$store.dispatch("user/fetchAccess"),
-      this.$store.dispatch("out/fetchWords"),
+    this.$store.dispatch("user/fetchAccess")
+      this.$store.dispatch("out/fetchWords")
       this.$store.dispatch("user/fetchAllUsers")
-      this.$store.dispatch("out/fetchTests")
+
   },
   data() {
     return {
@@ -113,9 +132,15 @@ export default {
         email: '',
         password: ''
       },
+      idForm: '',
       updateRole: {
         id: '',
         role: ''
+      },
+      setAnswerForm: {
+        testId: '',
+        userId: '',
+        answer: ''
       },
       add_wordsForm: {
         word: '',
@@ -146,6 +171,20 @@ export default {
     submitAdd_words(event) {
       event.preventDefault();
       this.$store.dispatch("out/add_words", this.add_wordsForm)
+    },
+    submitAdd_tests(event) {
+      event.preventDefault();
+      this.$store.dispatch("out/add_test_admin", this.add_testForm)
+    },
+    submitAdd_anwser(event) {
+      event.preventDefault();
+      this.$store.dispatch("out/add_test_answer", this.setAnswerForm)
+    },
+    submitIdTest() {
+      this.$store.dispatch("out/fetchTests", this.idForm)
+    },
+    setIdTest() {
+      this.submitIdTest(this.idForm)
     }
   }
 }

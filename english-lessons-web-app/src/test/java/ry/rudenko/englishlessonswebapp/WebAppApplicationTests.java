@@ -38,6 +38,8 @@ class WebAppApplicationTests {
 		Assertions.assertNotEquals(password, userEntity.getPassword());
 		Assertions.assertNotNull(userEntity.getId());
 	}
+
+
 	private ResponseEntity<?> buildUserResponse(UserEntity appUser) {
 		return ResponseEntity.ok(new UserResponse(appUser));
 	}
