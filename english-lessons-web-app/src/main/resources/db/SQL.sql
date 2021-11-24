@@ -29,17 +29,17 @@ VALUES (100, 1, 100, 'question'),
 
 INSERT INTO answer(id, answer_order, question_id, text)
 VALUES (100, 1, 100, 'answer'),
-       (101, 0, null, 'falseAnswer'),
-       (102, 0, null, 'falseAnswer'),
-       (103, 0, null, 'falseAnswer'),
+       (101, 0, 100, 'falseAnswer'),
+       (102, 0, 100, 'falseAnswer'),
+       (103, 0, 100, 'falseAnswer'),
        (104, 2, 101, 'что звук долгий'),
-       (105, 0, null, 'falseAnswer'),
-       (106, 0, null, 'falseAnswer'),
-       (107, 0, null, 'falseAnswer'),
+       (105, 0, 101, 'falseAnswer'),
+       (106, 0, 101, 'falseAnswer'),
+       (107, 0, 101, 'falseAnswer'),
        (108, 3, 102, 'односложные слова (в которых один гласный звук)'),
-       (109, 0, null, 'falseAnswer'),
-       (110, 0, null, 'falseAnswer'),
-       (111, 0, null, 'falseAnswer');
+       (109, 0, 102, 'falseAnswer'),
+       (110, 0, 102, 'falseAnswer'),
+       (111, 0, 102, 'falseAnswer');
 
-INSERT INTO shar_db.public.users_entity(birthday, email, enabled, last_name, locked, middle_name, name, password, role)
-VALUES (current_timestamp, 'admintest@gmail.com', true, 'last_name', false, 'middle_name', 'name', '$2a$10$Tt2jIGx.gGaM3ibht1U79eUkzo94GJmg7DSH7fTeHZmLF7S.nfkFy', 'ADMIN');
+-- INSERT INTO shar_db.public.users_entity(birthday, email, enabled, last_name, locked, middle_name, name, password, role)
+-- VALUES (current_timestamp, 'admintest@gmail.com', true, 'last_name', false, 'middle_name', 'nametest', '$2a$10$Tt2jIGx.gGaM3ibht1U79eUkzo94GJmg7DSH7fTeHZmLF7S.nfkFy', 'ADMIN');
