@@ -11,46 +11,19 @@
 
 
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>To see available endpoints, go to [http://localhost:8088/swagger-ui.html, http://localhost:8087/swagger-ui.html]</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
 
 
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
-App for learning English.
--Lessons by topic.
--Testing the passed topics.
--List of tasks with  status of completion of  type like todo.
--Learning Words for Every User.
-заменить картинку
+
+App for learning English.<br/>
+-Lessons by topic.<br/>
+-Testing the passed topics.<br/>
+-List of tasks with  status of completion of  type like todo.<br/>
+-Learning Words for Every User.<br/>
 
 
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot2]]
+[![Product Name Screen Shot][product-screenshot1]]
 
 
 
@@ -75,17 +48,14 @@ App for learning English.
 
 
 
-<!-- GETTING STARTED -->
 ## Getting Started
-
--check docker installed
--
-
-### Prerequisites
-
-_**`This is an example of how to list things you need to use the software and how to install them.`**_
-https://docs.docker.com/engine/install/ubuntu/
+-check npm installed<br/>
+-check maven installed<br/>
+-check docker installed<br/>
+-open terminal on root app directory<br/>
+- sh START_APP.sh <br/>
+-  open links  [http://localhost:3000/,   http://localhost:8088/swagger-ui.html,   http://localhost:8087/swagger-ui.html]     <br/>
 
 
-
-[product-screenshot]: images/scr.png
+[product-screenshot1]: images/scr2.png
+[product-screenshot2]: images/scr.png

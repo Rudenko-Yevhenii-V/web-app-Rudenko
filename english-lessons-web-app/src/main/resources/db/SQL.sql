@@ -41,5 +41,5 @@ VALUES (100, 1, 100, 'answer'),
        (110, 0, 102, 'falseAnswer'),
        (111, 0, 102, 'falseAnswer');
 
--- INSERT INTO shar_db.public.users_entity(birthday, email, enabled, last_name, locked, middle_name, name, password, role)
--- VALUES (current_timestamp, 'admintest@gmail.com', true, 'last_name', false, 'middle_name', 'nametest', '$2a$10$Tt2jIGx.gGaM3ibht1U79eUkzo94GJmg7DSH7fTeHZmLF7S.nfkFy', 'ADMIN');
+INSERT INTO users_entity(birthday, email, enabled, last_name, locked, middle_name, name, password, role)
+VALUES (current_timestamp, 'admintest@gmail.com', true, 'last_name', false, 'middle_name', 'nametest', '$2a$10$Tt2jIGx.gGaM3ibht1U79eUkzo94GJmg7DSH7fTeHZmLF7S.nfkFy', 'ADMIN');
