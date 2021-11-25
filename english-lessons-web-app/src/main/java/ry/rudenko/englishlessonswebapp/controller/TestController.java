@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import ry.rudenko.englishlessonswebapp.Routes;
+import ry.rudenko.englishlessonswebapp.auth.bean.CreateTestRequest;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
 import ry.rudenko.englishlessonswebapp.model.dto.TestDto;
 import ry.rudenko.englishlessonswebapp.service.TestService;
@@ -33,9 +34,9 @@ public class TestController {
   }
 
   @PostMapping("/admin" + Routes.CREATE_OR_UPDATE_TEST)
-  public ResponseEntity<TestDto> createOrUpdateTest(@RequestParam String falseAnswers,
-      @RequestBody TestDto test) {
-    return ResponseEntity.ok(testService.createTestDtoServ(falseAnswers, test));
+  public ResponseEntity<TestDto> createOrUpdateTest(
+      @RequestBody CreateTestRequest createTestRequest) {
+    return ResponseEntity.ok(testService.createTestDtoServ(createTestRequest));
   }
 
   @DeleteMapping("/admin" + Routes.DELETE_TEST)

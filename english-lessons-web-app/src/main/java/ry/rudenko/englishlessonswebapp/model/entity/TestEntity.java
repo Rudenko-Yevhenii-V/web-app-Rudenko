@@ -30,7 +30,10 @@ public class TestEntity   implements Serializable {
   @JoinColumn(name = "test_id", referencedColumnName = "id")
   List<QuestionEntity> questions = new ArrayList<>();
 
-  public static TestEntity makeDefault() {
-    return builder().build();
+  public static TestEntity makeDefault(String name, List<QuestionEntity> questions) {
+    return builder()
+        .name(name)
+        .questions(questions)
+        .build();
   }
 }

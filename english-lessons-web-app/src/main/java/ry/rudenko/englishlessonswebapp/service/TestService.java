@@ -1,18 +1,16 @@
 package ry.rudenko.englishlessonswebapp.service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import ry.rudenko.englishlessonswebapp.auth.bean.CreateTestRequest;
 import ry.rudenko.englishlessonswebapp.exception.NotFoundException;
 import ry.rudenko.englishlessonswebapp.factory.TestDtoFactory;
 import ry.rudenko.englishlessonswebapp.model.dto.AckDto;
-import ry.rudenko.englishlessonswebapp.model.dto.AnswerDto;
-import ry.rudenko.englishlessonswebapp.model.dto.QuestionDto;
 import ry.rudenko.englishlessonswebapp.model.dto.TestDto;
 import ry.rudenko.englishlessonswebapp.model.entity.AnswerEntity;
 import ry.rudenko.englishlessonswebapp.model.entity.QuestionEntity;
@@ -51,67 +49,69 @@ public class TestService {
     return testDtoFactory.createTestDto(test);
   }
 
-  public TestDto createTestDtoServ(String falseAnswers, TestDto test) {
-
-    List<String> falseAnswerList = Arrays.stream(falseAnswers.split(","))
-        .filter(it -> !it.trim().isEmpty())
-        .collect(Collectors.toList());
-    TestEntity testEntity = convertTestToEntity(test);
+  public TestDto createTestDtoServ(CreateTestRequest createTestRequest) {
+    List<AnswerEntity> answerEntities = new ArrayList<>();
+    answerEntities.add(
+        new AnswerEntity(createTestRequest.getAnswerOrder(), createTestRequest.getAnswerText()));
+    answerEntities.add(new AnswerEntity(createTestRequest.getFalseAnswerText1()));
+    answerEntities.add(new AnswerEntity(createTestRequest.getFalseAnswerText2()));
+    answerEntities.add(new AnswerEntity(createTestRequest.getFalseAnswerText3()));
+    List<QuestionEntity> questions = new ArrayList<>();
+    questions.add(QuestionEntity.makeDefault(
+        createTestRequest.getQuestionOrder(),
+        createTestRequest.getQuestionText(),
+        answerEntities
+    ));
+    TestEntity testEntity = TestEntity.makeDefault(createTestRequest.getTestName(), questions);
     testEntity = testRepository.saveAndFlush(testEntity);
-
-    TestEntity finalTestEntity = testEntity;
-    falseAnswerList.forEach(
-        s -> answerRepository.saveAndFlush(AnswerEntity.makeDefault(s, 0,
-            finalTestEntity.getQuestions().get(0))));
-
     return testDtoFactory.createTestDto(testEntity);
   }
 
-  private TestEntity convertTestToEntity(TestDto dto) {
-    Long testId = dto.getId();
-    TestEntity test;
-    if (testId == null) {
-      test = TestEntity.makeDefault();
-    } else {
-      test = testRepository
-          .findById(testId)
-          .orElseThrow(() ->
-              new NotFoundException(String.format("Test with id  \"%s\" not found.", testId))
-          );
-    }
-    test.setName(dto.getName());
-    test.getQuestions().clear();
-    test.getQuestions().addAll(
-        dto.getQuestions()
-            .stream()
-            .map(this::convertQuestionToEntity)
-            .collect(Collectors.toList())
-    );
-    return test;
-  }
+//  private TestEntity convertTestToEntity(TestDto dto) {
+//    Long testId = dto.getId();
+//    TestEntity test;
+//    if (testId == null) {
+//      test = new TestEntity();
+//    } else {
+//      test = testRepository
+//          .findById(testId)
+//          .orElseThrow(() ->
+//              new NotFoundException(String.format("Test with id  \"%s\" not found.", testId))
+//          );
+//    }
+//    test.setName(dto.getName());
+//    test.getQuestions().clear();
+//    test.getQuestions().addAll(
+//        dto.getQuestions()
+//            .stream()
+//            .map(this::convertQuestionToEntity)
+//            .collect(Collectors.toList())
+//    );
+//    return test;
+//  }
 
-  private QuestionEntity convertQuestionToEntity(QuestionDto dto) {
-    QuestionEntity question = QuestionEntity.makeDefault();
-    question.setId(dto.getId());
-    question.setQuestionOrder(dto.getOrder());
-    question.setText(dto.getText());
-    question.getAnswers().clear();
-    question.getAnswers().addAll(
-        dto.getAnswers()
-            .stream()
-            .map(this::convertAnswerToEntity)
-            .collect(Collectors.toList())
-    );
-    return question;
-  }
+//  private QuestionEntity convertQuestionToEntity(QuestionDto dto) {
+//    QuestionEntity question = new QuestionEntity();
+//    question.setId(dto.getId());
+//    question.setQuestionOrder(dto.getOrder());
+//    question.setText(dto.getText());
+//    question.getAnswers().clear();
+//    question.getAnswers().addAll(
+//        dto.getAnswers()
+//            .stream()
+//            .map(this::convertAnswerToEntity)
+//            .collect(Collectors.toList())
+//    );
+//    return question;
+//  }
 
-  private AnswerEntity convertAnswerToEntity(AnswerDto dto) {
-    AnswerEntity answer = new AnswerEntity();
-    answer.setText(dto.getName());
-    answer.setAnswerOrder(dto.getOrder());
-    answer.setId(dto.getId());
-    return answer;
-  }
+//  private AnswerEntity convertAnswerToEntity(AnswerDto dto) {
+//    AnswerEntity answer = new AnswerEntity();
+//    answer.setText(dto.getName());
+//    answer.setAnswerOrder(dto.getOrder());
+//    answer.setId(dto.getId());
+//    return answer;
+//  }
 
   public AckDto deleteTest(Long testId) {
     testRepository

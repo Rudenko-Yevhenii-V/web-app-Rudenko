@@ -37,7 +37,31 @@
     </nav>
 <div class="test_class">
     <h1>Tests</h1>
+  <form @submit="submitAdd_tests">
+    <div><input type="text" placeholder="testName" v-model="add_testForm.testName"/></div>
+    <div><input type="text" placeholder="questionOrder" v-model="add_testForm.questionOrder"/></div>
+    <div><input type="text" placeholder="questionText" v-model="add_testForm.questionText"/></div>
+    <div><input type="text" placeholder="answerOrder" v-model="add_testForm.answerOrder"/></div>
+    <div><input type="text" placeholder="answerText" v-model="add_testForm.answerText"/></div>
+    <div><input type="text" placeholder="falseAnswerText1" v-model="add_testForm.falseAnswerText1"/></div>
+    <div><input type="text" placeholder="falseAnswerText2" v-model="add_testForm.falseAnswerText2"/></div>
+    <div><input type="text" placeholder="falseAnswerText3" v-model="add_testForm.falseAnswerText3"/></div>
+    <div><input class="btn btn-info" type="submit" value="ADD TEST"/></div>
+  </form>
+  test id = {{ idAddingTest.id }}<br/>
+  test name = {{ idAddingTest.name }}<br/>
+question text => {{ idAddingTest.questions.text }}
+
+
+  <li v-for="answer of idAddingTest.questions.answers"
+  >answer => {{ answer.id}} -- {{ answer.name}}
+  </li>
+
+
+
+
   <hr>
+  <h5>Seach  tests</h5>
     <b class="input_area  py-2 d-none d-md-inline-block">
       <form @submit="submitIdTest()">
         <div><input type="text" placeholder="id" v-model="idForm" v-on:keyup.enter="setIdTest" /></div>
@@ -47,9 +71,9 @@
   <hr>
   {{ answer }}
   <form @submit="submitAdd_anwser">
-    <div><input type="text" placeholder="testId" v-model="setAnswerForm.testId"/></div>
     <div><input type="text" placeholder="userId" v-model="setAnswerForm.userId"/></div>
-    <div><input type="text" placeholder="answer" v-model="setAnswerForm.answer"/></div>
+    <div><input type="text" placeholder="testId" v-model="setAnswerForm.testId"/></div>
+    <div><input type="text" placeholder="answerId" v-model="setAnswerForm.answer"/></div>
     <div><input class="btn btn-info" type="submit" value="OK"/></div>
   </form>
 </div>
@@ -108,12 +132,12 @@ export default {
     all_users: "user/getAllUsers",
     tests: "out/getTests",
     answer: "out/getAnswer",
+    idAddingTest: "out/getIdAddingTest"
   }),
   fetch() {
     this.$store.dispatch("user/fetchAccess")
       this.$store.dispatch("out/fetchWords")
       this.$store.dispatch("user/fetchAllUsers")
-
   },
   data() {
     return {
@@ -132,6 +156,7 @@ export default {
         email: '',
         password: ''
       },
+
       idForm: '',
       updateRole: {
         id: '',
@@ -145,6 +170,16 @@ export default {
       add_wordsForm: {
         word: '',
         description: ''
+      },
+      add_testForm: {
+        testName: '',
+        questionOrder: '',
+        questionText: '',
+         answerOrder: '',
+         answerText: '',
+        falseAnswerText1: '',
+         falseAnswerText2: '',
+         falseAnswerText3: ''
       }
     }
   },
@@ -174,7 +209,7 @@ export default {
     },
     submitAdd_tests(event) {
       event.preventDefault();
-      this.$store.dispatch("out/add_test_admin", this.add_testForm)
+      this.$store.dispatch("out/add_tests", this.add_testForm)
     },
     submitAdd_anwser(event) {
       event.preventDefault();

@@ -38,7 +38,11 @@ public class QuestionEntity   implements Serializable {
   @JoinColumn(name = "question_id", referencedColumnName = "id")
   List<AnswerEntity> answers = new ArrayList<>();
 
-  public static QuestionEntity makeDefault() {
-    return builder().build();
+  public static QuestionEntity makeDefault(Integer questionOrder, String text, List<AnswerEntity> answers) {
+    return builder()
+        .text(text)
+        .questionOrder(questionOrder)
+        .answers(answers)
+        .build();
   }
 }

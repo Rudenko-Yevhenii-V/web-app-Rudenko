@@ -32,6 +32,16 @@ public class AnswerEntity  implements Serializable {
   @Column(name = "question_id", updatable = false, insertable = false)
   Long questionId;
 
+  public AnswerEntity(Integer answerOrder, String answerText) {
+    setAnswerOrder(answerOrder);
+    setText(answerText);
+  }
+
+  public AnswerEntity(String falseAnswerText) {
+    setAnswerOrder(0);
+    setText(falseAnswerText);
+  }
+
   public static AnswerEntity makeDefault(String falseAnswer, Integer answerOrder, QuestionEntity questionEntity) {
 
     return builder()

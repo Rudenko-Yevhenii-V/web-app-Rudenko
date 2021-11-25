@@ -20,7 +20,7 @@ public class TestDtoFactory {
   }
   public TestDto createTestDto(TestEntity entity) {
     return TestDto.builder().id(entity.getId()).name(entity.getName())
-        .questions(createQuestionDtoList(entity.getQuestions())).build();
+        .questions(createQuestionDtoList(entity.getQuestions()).get(0)).build();
   }
   public List<TestDto> createTestDtoList(List<TestEntity> entities) {
     return entities.stream().map(this::createTestDto).distinct().collect(Collectors.toList());

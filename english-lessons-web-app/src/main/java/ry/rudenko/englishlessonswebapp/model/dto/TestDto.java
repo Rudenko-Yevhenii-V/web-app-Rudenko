@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TestDto extends LiteTestDto {
-  List<QuestionDto> questions;
+  QuestionDto questions;
 }

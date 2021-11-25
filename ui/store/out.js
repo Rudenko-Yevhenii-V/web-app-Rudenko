@@ -4,7 +4,40 @@ import Vuex from 'vuex'
 export const state = () => ({
   words: null,
   tests: null,
-  answer: false
+  answer: false,
+  idAddingTest: {
+    id: '',
+    name: '',
+    questions:
+        {
+          id: '',
+          order: '',
+          text: '',
+          answers:
+            [
+              {
+                id: '',
+                order: '',
+                name: ''
+              },
+              {
+                id: '',
+                order: '',
+                name: ''
+              },
+              {
+                id: '',
+                order: '',
+                name: ''
+              },
+              {
+                id: '',
+                order: '',
+                name: ''
+              }
+            ]
+        }
+  }
 })
 
 export const getters = {
@@ -16,7 +49,9 @@ export const getters = {
   },
   getAnswer(state) {
     return state.tests
-  },
+  },getIdAddingTest(state) {
+    return state.idAddingTest
+  }
 }
 
 export const actions = {
@@ -35,6 +70,11 @@ export const actions = {
       context.dispatch("fetchWords")
     })
   },
+  add_tests(context, data) {
+    this.$axios.post("/api/v1/auth/admin/tests", data).then(res => {
+      context.commit("setIdAddingTest", res.data)
+    })
+  },
   add_test_answer(context, data) {
     this.$axios.post("/api/v1/auth/tests/" + data.testId + "/users/" + data.userId + "/compete?answer=" + data.answer).then(res => {
       context.commit("setAnswer", res.data)
@@ -50,6 +90,9 @@ export const mutations = {
     state.tests = data;
   },
   setAnswer(state, data) {
-    state.tests = data;
+    state.answer = data;
+  },
+  setIdAddingTest(state, data) {
+    state.idAddingTest = data;
   }
 }
